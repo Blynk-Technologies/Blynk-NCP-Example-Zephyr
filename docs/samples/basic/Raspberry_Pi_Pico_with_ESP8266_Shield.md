@@ -16,7 +16,7 @@ Software:
 
 ## Flash the Network Co-Processor
 
-👉 Follow the detailed [Pico-ESP8266 flashing guide](../flashing_ncp/Pico_ESP8266.md)
+👉 Follow the detailed [Pico-ESP8266 flashing guide](../../flashing_ncp/Pico_ESP8266.md)
 
 ## Assemble the board
 
@@ -128,7 +128,7 @@ Open the `Blynk App` -> click `Add New Device` -> select `Find Devices Nearby`
 
 ## Troubleshooting
 
-Check out the [troubleshooting guide](./Troubleshooting.md)
+Check out the [troubleshooting guide](../../Troubleshooting.md)
 
 ## Disclaimer
 

@@ -17,7 +17,7 @@ Software:
 
 ## Flash the Network Co-Processor
 
-👉 Follow the detailed [Witty Cloud flashing guide](../flashing_ncp/Witty_Cloud.md)
+👉 Follow the detailed [Witty Cloud flashing guide](../../flashing_ncp/Witty_Cloud.md)
 
 ## Assemble the board
 
@@ -133,7 +133,7 @@ Open the `Blynk App` -> click `Add New Device` -> select `Find Devices Nearby`
 
 ## Troubleshooting
 
-Check out the [troubleshooting guide](./Troubleshooting.md)
+Check out the [troubleshooting guide](../../Troubleshooting.md)
 
 ## Disclaimer
 

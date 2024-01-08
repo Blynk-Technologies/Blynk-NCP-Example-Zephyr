@@ -16,7 +16,7 @@ Software:
 
 ## Flash the Network Co-Processor
 
-👉 Follow the detailed [??? flashing guide](../flashing_ncp/???.md)
+👉 Follow the detailed [??? flashing guide](../../flashing_ncp/???.md)
 
 ## Assemble the board
 
@@ -99,7 +99,7 @@ Open the `Blynk App` -> click `Add New Device` -> select `Find Devices Nearby`
 
 ## Troubleshooting
 
-Check out the [troubleshooting guide](./Troubleshooting.md)
+Check out the [troubleshooting guide](../../Troubleshooting.md)
 
 ## Disclaimer
 
