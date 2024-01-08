@@ -16,7 +16,7 @@ Software:
 
 ![assembled](../images/ESP8266-Witty-Cloud.png)
 
-1. Assemble the Witty Cloud board (insert top part into the bottom part)
+1. Assemble the Witty Cloud board (insert the top part into the bottom part)
 2. Connect the board to your PC **using the bottom USB port**
 
 Run this command:
@@ -58,7 +58,7 @@ Hard resetting via RTS pin...
 ## Verify
 
 1. Re-connect the USB cable.
-2. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
+2. Use your favorite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
 3. Press the `RST` button on the Witty Cloud and wait a few seconds.
 4. The serial monitor should display:
 
@@ -70,6 +70,6 @@ Hard resetting via RTS pin...
 ## Finish
 
 1. Disconnect the USB cable from Witty Cloud.
-2. Detach top and bottom parts.
+2. Detach the top and bottom parts.
 3. Use **the top part of Witty Cloud** as your Network Co-Processor.
 
