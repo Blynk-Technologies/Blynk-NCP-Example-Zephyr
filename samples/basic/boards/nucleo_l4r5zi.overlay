@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2024 Blynk Technologies Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+    chosen {
+        zephyr,console = &usart2;
+        zephyr,shell-uart = &usart2;
+        blynk,ncp-uart = &usart3;
+        blynk,ncp-status-led = &blue_led_0;
+        zephyr,code-partition = &slot0_partition;
+    };
+};
+
+&usart3 {
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&usart2 {
+    current-speed = <115200>;
+    status = "okay";
+};
+
+/* Remove default partitions */
+/delete-node/ &storage_partition;
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x0000000 0x20000>;
+            read-only;
+        };
+        nvs_partition: partition@20000 {
+            label = "nvs";
+            reg = <0x0020000 0x00020000>;
+        };
+        slot0_partition: partition@40000 {
+            label = "image-0";
+            reg = <0x0040000 0x40000>;
+        };
+        slot1_partition: partition@80000 {
+            label = "image-1";
+            reg = <0x0080000 0x40000>;
+        };
+        scratch_partition: partition@C0000 {
+            label = "scratch";
+            reg = <0x00C0000 0x40000>;
+        };
+    };
+};

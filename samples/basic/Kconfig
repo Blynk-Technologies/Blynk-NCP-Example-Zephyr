@@ -1,0 +1,7 @@
+# Config options for Blynk.NCP driver
+
+# Copyright (c) 2024 Blynk Technologies Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+rsource "../../blynk_ncp/Kconfig.blynk_ncp"
+source "Kconfig.zephyr"

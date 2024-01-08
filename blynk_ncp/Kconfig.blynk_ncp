@@ -1,0 +1,130 @@
+# Config options for Blynk.NCP driver
+
+# Copyright (c) 2024 Blynk Technologies Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Config options for Blynk.NCP driver
+
+# Copyright (c) 2024 Blynk Technologies Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Blynk.NCP host driver"
+
+config BLYNK_NCP_ONBOARD_RGB_LED
+    bool "Use onboard RGB LED on NCP"
+    default n
+
+config BLYNK_NCP_ONBOARD_RGB_R_GPIO_NUM
+    int "Onboard LED gpio - RED"
+    default 15
+    depends on BLYNK_NCP_ONBOARD_RGB_LED
+    help
+        specifies which NCP GPIO pin connected to R led
+
+config BLYNK_NCP_ONBOARD_RGB_G_GPIO_NUM
+    int "Onboard LED gpio - GREEN"
+    default 12
+    depends on BLYNK_NCP_ONBOARD_RGB_LED
+    help
+        specifies which NCP GPIO pin connected to G led
+
+config BLYNK_NCP_ONBOARD_RGB_B_GPIO_NUM
+    int "Onboard LED gpio - BLUE"
+    default 13
+    depends on BLYNK_NCP_ONBOARD_RGB_LED
+    help
+        specifies which NCP GPIO pin connected to B led
+
+config BLYNK_NCP_ONBOARD_LED
+    bool "Use onboard monochrome LED on NCP"
+    default n
+
+config BLYNK_NCP_ONBOARD_LED_GPIO_NUM
+    int "Onboard LED gpio"
+    depends on BLYNK_NCP_ONBOARD_LED
+    default 13
+
+config BLYNK_NCP_ONBOARD_LED_COM_ANODE
+    int "Onboard LED is common anode (0|1)"
+    default 0
+    depends on BLYNK_NCP_ONBOARD_LED || BLYNK_NCP_ONBOARD_RGB_LED
+    help
+        specifies connection of NCP onboard LED
+
+config BLYNK_NCP_ONBOARD_LED_BRIGHT
+    int "Onboard LED brightness (0..255)"
+    depends on BLYNK_NCP_ONBOARD_LED || BLYNK_NCP_ONBOARD_RGB_LED
+    default 64
+
+config BLYNK_NCP_ONBOARD_BTN
+    bool "Use onboard User Button on NCP"
+    default n
+
+config BLYNK_NCP_ONBOARD_BTN_GPIO_NUM
+    int "Onboard button gpio"
+    depends on BLYNK_NCP_ONBOARD_BTN
+    default 18
+
+config BLYNK_NCP_ONBOARD_BTN_INVERSION
+    int "Onboard button inversion (0|1)"
+    depends on BLYNK_NCP_ONBOARD_BTN
+    default 0
+
+config BLYNK_TEMPLATE_ID
+    string "Blynk Template ID"
+    help
+        Product's Template ID is used to check if new Device is allowed to work with the Product's settings
+
+config BLYNK_TEMPLATE_NAME
+    string "Blynk Template Name"
+    help
+        Specify your Template Name here
+
+config BLYNK_FIRMWARE_VERSION
+    string "Firmware version"
+    default MCUBOOT_IMGTOOL_SIGN_VERSION
+    help
+        Used for OTA purposes
+
+config BLYNK_FIRMWARE_TYPE
+    string "Firmware type (optional)"
+    default BLYNK_TEMPLATE_ID
+    help
+        This setting allows to decouple the firmware type from the Template ID.
+        Used for OTA purposes.
+
+config BLYNK_VENDOR_PREFIX
+    string "Vendor prefix [for white-labeling]"
+    help
+        The device name prefix that is displayed during provisioning.
+        This can only be used with white label Blynk apps.
+
+config BLYNK_VENDOR_SERVER
+    string "Vendor server"
+    help
+        The default server to connect to. Please note that during the device provisioning, the application overrides this setting.
+
+config BLYNK_NCP_BAUD
+    int "Target uart baudrate"
+    default 115200
+    help
+        The NCP driver tries to find the Blynk.NCP module on a variety of baud rates, then reconfigures the baud rate to this value.
+
+config BLYNK_UART_RX_BUF_SIZE
+    int "Size of RX buffer"
+    default 2048
+    help
+        Receiver should be ready to receive at least 1536 bytes of raw (unescaped) data
+
+config BLYNK_UART_TX_BUF_SIZE
+    int "Size of TX buffer"
+    default 2048
+    help
+        Transmitter should be ready to send at least 1536 bytes of raw (unescaped) data
+
+
+config BLYNK_LOG_LVL
+    int "logging level"
+    default LOG_DEFAULT_LEVEL
+
+endmenu

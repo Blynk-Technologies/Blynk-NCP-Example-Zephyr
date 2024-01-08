@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2024 Blynk Technologies Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+    chosen {
+        blynk,ncp-uart = &usart2;
+        zephyr,code-partition = &slot0_partition;
+    };
+};
+
+&usart2 {
+    pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x0000000 0x8000>;
+            read-only;
+        };
+        slot0_partition: partition@8000 {
+            label = "image-0";
+            reg = <0x0008000 0xb000>;
+        };
+        slot1_partition: partition@13000 {
+            label = "image-1";
+            reg = <0x0013000 0xb000>;
+        };
+        scratch_partition: partition@1E000 {
+            label = "scratch";
+            reg = <0x001E000 0x1000>;
+        };
+        nvs_partition: partition@1F000 {
+            label = "nvs";
+            reg = <0x001F000 0x1000>;
+        };
+    };
+};

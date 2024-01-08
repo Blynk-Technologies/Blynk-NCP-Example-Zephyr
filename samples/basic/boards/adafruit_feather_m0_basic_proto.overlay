@@ -1,0 +1,84 @@
+/*
+ * Copyright (c) 2024 Blynk Technologies Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+    chosen {
+        zephyr,console = &sercom5;
+        zephyr,shell-uart = &sercom5;
+        blynk,ncp-uart = &sercom0;
+        blynk,ncp-rst = &ncp_rst;
+        zephyr,code-partition = &slot0_partition;
+    };
+
+    outputs {
+        compatible = "gpio-leds";
+        ncp_rst: ncp_rst {
+            gpios = <&porta 19 GPIO_ACTIVE_LOW>; /* D12 */
+            label = "NCP RST";
+        };
+    };
+};
+
+&sercom5 {
+    status = "okay";
+    compatible = "atmel,sam0-uart";
+    current-speed = <115200>;
+    rxpo = <3>;
+    txpo = <1>;
+
+    pinctrl-0 = <&sercom5_uart_default>;
+    pinctrl-names = "default";
+};
+
+&pinctrl {
+    sercom5_uart_default: sercom5_uart_default {
+        group1 {
+            pinmux = <PB23D_SERCOM5_PAD3>,
+                     <PB22D_SERCOM5_PAD2>;
+        };
+    };
+};
+
+/* Remove default partitions */
+/delete-node/ &boot_partition;
+/delete-node/ &code_partition;
+/delete-node/ &storage_partition;
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        boot0_partition: partition@0 {
+            label = "sam-ba";
+            reg = <0x0 DT_SIZE_K(8)>;
+            read-only;
+        };
+        boot_partition: partition@2000 {
+            label = "mcuboot";
+            reg = <0x0002000 DT_SIZE_K(32)>;
+            read-only;
+        };
+        slot0_partition: partition@A000 {
+            label = "image-0";
+            reg = <0x000A000 DT_SIZE_K(92)>;
+        };
+        slot1_partition: partition@21000 {
+            label = "image-1";
+            reg = <0x0021000 DT_SIZE_K(92)>;
+        };
+        nvs_partition: partition@38000 {
+            label = "nvs";
+            reg = <0x0038000 DT_SIZE_K(24)>;
+        };
+        scratch_partition: partition@3E000 {
+            label = "scratch";
+            reg = <0x003E000 DT_SIZE_K(8)>;
+        };
+    };
+};
