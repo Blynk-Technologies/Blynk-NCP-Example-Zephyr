@@ -53,7 +53,7 @@ TODO
 
 ## Verify
 
-1. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
+1. Use your favorite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
 2. **Important:** Disconnect the `G0` from `GND`.
 3. Power-cycle the shield by reconnecting the 5V supply and wait a few seconds.
 4. The serial monitor should display:
