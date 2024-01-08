@@ -18,14 +18,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Zephyr
-        uses: fabiobaltieri/zephyr-setup@main
         with:
-          app-path: samples/basic
+          submodules: 'true'
+      - name: Setup Zephyr
+        uses: khrystynaO/zephyr-setup@main
+        with:
+          zephyr-version: v3.5.0
           toolchains: arm-zephyr-eabi
+      - name: Set Blynk ID and Name
+        run: |
+          cd samples/basic
+          echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPL4V9okroD9"' >> prj.conf
+          echo 'CONFIG_BLYNK_TEMPLATE_NAME="LED ESP32"' >> prj.conf
       - name: Build
         run: |
-          west build -p -b ${BOARD} --sysbuild . -- \
-            -Dmcuboot_DTC_OVERLAY_FILE=$(pwd)/boards/${BOARD}.overlay \
-            -Dmcuboot_EXTRA_DTC_OVERLAY_FILE=${ZEPHYR_BASE}/../bootloader/mcuboot/boot/zephyr/app.overlay \
-            -DEXTRA_CONF_FILE=$(pwd)/boards/witty_cloud.conf
+          cd samples/basic
+          ./build.sh ${BOARD}
+
