@@ -44,16 +44,24 @@ int main(void)
 #endif
 
     LOG_INF("Blynk.NCP host example on %s", CONFIG_BOARD);
-    LOG_INF("Firmware version: %s", CONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION);
+    LOG_INF("Firmware version: %s", CONFIG_BLYNK_FIRMWARE_VERSION);
 
     // Mark OTA image as OK
     if (boot_set_confirmed_multi(0))
     {
         LOG_ERR("Can't confirm boot image");
+        return 1;
     }
 
     // Initialize Blynk.NCP
-    blynk_ncp_init();
+    if (blynk_ncp_init())
+    {
+        LOG_ERR("Can't initialize Blynk.NCP");
+        return 1;
+    }
+
+    // Set the configuration mode timeout to 30 minutes (for demo purposes)
+    rpc_blynk_setConfigTimeout(30*60);
 
     // Start a periodic timer
     k_timer_start(&periodic_timer, K_SECONDS(10), K_SECONDS(10));

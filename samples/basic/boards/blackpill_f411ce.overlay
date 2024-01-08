@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2024 Blynk Technologies Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+        blynk,ncp-uart = &usart2;
+        blynk,ncp-rst = &ncp_rst;
+        blynk,ncp-status-led = &user_led;
+        zephyr,code-partition = &slot0_partition;
+    };
+
+    outputs {
+        compatible = "gpio-leds";
+        ncp_rst: ncp_rst {
+            gpios = <&gpioa 5 GPIO_ACTIVE_LOW>; // A5 header pin
+            label = "NCP RST";
+        };
+    };
+};
+
+&zephyr_udc0 {
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
+
+&usart2 {
+    pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+    pinctrl-names = "default";
+    status = "okay";
+    current-speed = <38400>;
+};
+
+/*
+ * MCUboot-compatible partitions are already defined for this board
+ */
+

@@ -7,14 +7,27 @@
 
 / {
     chosen {
-        blynk,ncp-uart = &uart1;
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+        blynk,ncp-uart = &uart0;
+        blynk,ncp-rst = &ncp_rst;
+        blynk,ncp-status-led = &led0;
         zephyr,code-partition = &slot0_partition;
+    };
+
+    outputs {
+        compatible = "gpio-leds";
+        ncp_rst: ncp_rst {
+            gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+            label = "NCP RST";
+        };
     };
 };
 
-&uart1 {
-    current-speed = <38400>;
-    status = "okay";
+&zephyr_udc0 {
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
+    };
 };
 
 /delete-node/ &code_partition;
@@ -32,19 +45,19 @@
         };
         scratch_partition: partition@10000 {
             label = "scratch";
-            reg = <0x0010000 0x10000>;
+            reg = <0x0010000 DT_SIZE_K(64)>;
         };
         nvs_partition: partition@20000 {
             label = "nvs";
-            reg = <0x0020000 0x20000>;
+            reg = <0x0020000 DT_SIZE_K(128)>;
         };
         slot0_partition: partition@40000 {
             label = "image-0";
-            reg = <0x0040000 0xE0000>;
+            reg = <0x0040000 DT_SIZE_K(896)>;
         };
         slot1_partition: partition@120000 {
             label = "image-1";
-            reg = <0x0120000 0xE0000>;
+            reg = <0x0120000 DT_SIZE_K(896)>;
         };
     };
 };

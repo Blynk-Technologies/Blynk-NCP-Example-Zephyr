@@ -7,8 +7,8 @@
 
 / {
     chosen {
-        zephyr,console = &sercom5;
-        zephyr,shell-uart = &sercom5;
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
         blynk,ncp-uart = &sercom0;
         blynk,ncp-rst = &ncp_rst;
         zephyr,code-partition = &slot0_partition;
@@ -23,23 +23,9 @@
     };
 };
 
-&sercom5 {
-    status = "okay";
-    compatible = "atmel,sam0-uart";
-    current-speed = <115200>;
-    rxpo = <3>;
-    txpo = <1>;
-
-    pinctrl-0 = <&sercom5_uart_default>;
-    pinctrl-names = "default";
-};
-
-&pinctrl {
-    sercom5_uart_default: sercom5_uart_default {
-        group1 {
-            pinmux = <PB23D_SERCOM5_PAD3>,
-                     <PB22D_SERCOM5_PAD2>;
-        };
+&zephyr_udc0 {
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
     };
 };
 
