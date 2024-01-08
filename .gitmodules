@@ -1,3 +1,3 @@
-[submodule "blynk_over_zephyr/blynk_lib/src/BlynkNcpDriver"]
+[submodule "BlynkNcpDriver"]
 	path = blynk_ncp/src/BlynkNcpDriver
 	url = git@github.com:Blynk-Technologies/BlynkNcpDriver.git
