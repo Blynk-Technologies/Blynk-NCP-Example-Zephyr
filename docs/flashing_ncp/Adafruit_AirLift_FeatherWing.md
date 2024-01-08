@@ -18,7 +18,7 @@ Software:
 ## Assemble the shield
 
 1. Solder the [Feather header pins](https://learn.adafruit.com/adafruit-airlift-featherwing-esp32-wifi-co-processor-featherwing/assembly-2)
-2. Bridge the `ESPTX`, `ESPRX`, and `ESPGPIO0` jumper pads (using small amount of solder)
+2. Bridge the `ESPTX`, `ESPRX`, and `ESPGPIO0` jumper pads (using a small amount of solder)
 
 ![jumpers](../images/AirLift-Feater-Bottom.png)
 
@@ -54,7 +54,7 @@ TODO
 
 ## Verify
 
-1. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
+1. Use your favorite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
 2. **Important:** Disconnect the `G0` from `GND`.
 3. Power-cycle the shield by reconnecting the 5V supply and wait a few seconds.
 4. The serial monitor should display:
