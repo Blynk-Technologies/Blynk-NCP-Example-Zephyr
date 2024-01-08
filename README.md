@@ -60,11 +60,27 @@ TODO
 
 ## Getting started
 
-TODO
+This repository contains examples for multiple boards and use cases.
+In general, getting started with Blynk.NCP on Zephyr will consist of:
+
+1. Setting up Zephyr and dev environment
+2. Uploading Blynk.NCP firmware to your NCP module
+3. Assembling the board
+4. Bulding and flashing the sample firmware
+5. Using Blynk iOS/Android app to add your device to the Blynk Cloud
+
+We have prepared a set of step-by-step tutorials for each use case:
+
+- [ST Nucleo L4R5ZI + AirLift Shield](docs/samples/basic/ST_Nucleo_L4R5ZI_with_AirLift.md)
+- [WeAct Black Pill F411CE + Witty Cloud](docs/samples/basic/WeAct_Black_Pill_with_Witty_Cloud.md)
+- [Adafruit Feather STM32F405 + AirLift FeatherWing](docs/samples/basic/Adafruit_Feather_STM32F405_with_AirLift.md)
+- [Raspberry Pi Pico + Pico-ESP8266 Shield](docs/samples/basic/Raspberry_Pi_Pico_with_ESP8266_Shield.md)
+- [Arduino DUE + AirLift Shield](docs/samples/basic/Arduino_DUE_with_AirLift.md) *(without OTA)*
+- [Adafruit Feather M0 Basic + AirLift FeatherWing](docs/samples/basic/Adafruit_Feather_M0_Basic_with_AirLift.md) *(without OTA)*
 
 ## Troubleshooting
 
-TODO
+Check out the [troubleshooting guide](docs/Troubleshooting.md)
 
 ## Disclaimer
 
