@@ -24,7 +24,7 @@ It is recommended to route the `VCC_EN` of the voltage regulator to the GPIO hea
 ![jumpers](../images/Pico-ESP8266-Top.png)
 
 > [!TIP]
-> Alternatively (depending on you application) you may want to route the ESP8266 `REST` pin to `GP15`.
+> Alternatively (depending on your application) you may want to route the ESP8266 `REST` pin to `GP15`.
 > Check out the [schematic](https://files.waveshare.com/upload/7/74/Pico-ESP8266_Schematic.pdf) for details.
 
 ## Connect the TTL Serial adapter or cable
@@ -82,7 +82,7 @@ Hard resetting via RTS pin...
 
 ## Verify
 
-1. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
+1. Use your favorite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the TTL serial console (`38400 8N1`).
 2. Press the `RST` button and wait a few seconds.
 3. The serial monitor should display:
 
