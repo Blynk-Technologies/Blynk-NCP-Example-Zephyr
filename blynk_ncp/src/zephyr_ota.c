@@ -234,7 +234,7 @@ void rpc_client_otaUpdateCancel_impl(void) {
     flash_area_close(ota_info.fa);
 }
 
-void ota_run(void) {
+void ncp_ota_run(void) {
     static int init = 0;
 
     if(!init) {

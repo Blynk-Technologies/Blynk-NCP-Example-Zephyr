@@ -108,7 +108,7 @@ uint32_t rpc_system_millis(void)
     return k_uptime_get_32();
 }
 
-int uart_init(void)
+int ncp_uart_init(void)
 {
     if (!device_is_ready(uart_dev))
     {
