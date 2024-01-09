@@ -31,30 +31,27 @@ Software:
 
 ![breadboard](https://raw.githubusercontent.com/Blynk-Technologies/BlynkNcpExample/main/docs/Boards/BlackPill-Witty.png)
 
-## Configure the sample project
+## Configure and build the sample project
 
 ```sh
 git clone https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr
 cd BlynkNcpExample_Zephyr
 git submodule update --init --recursive
-
-cd samples/basic
-
-export ZEPHYR_BASE=~/zephyrproject/zephyr
-export BOARD=blackpill_f411ce
 ```
 
 Fill in [the information from your Blynk Template](https://bit.ly/BlynkInject):
 
 ```
+cd samples/basic
 echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPxxxxxxxxx"' >> prj.conf
 echo 'CONFIG_BLYNK_TEMPLATE_NAME="OurProduct"' >> prj.conf
 ```
 
-## Build
+Build:
 
 ```sh
-west build -p -b ${BOARD} --sysbuild . -- -Dmcuboot_DTC_OVERLAY_FILE=$(pwd)/boards/${BOARD}.overlay -Dmcuboot_EXTRA_DTC_OVERLAY_FILE=${ZEPHYR_BASE}/../bootloader/mcuboot/boot/zephyr/app.overlay -DEXTRA_CONF_FILE=$(pwd)/boards/witty_cloud.conf
+export ZEPHYR_BASE=~/zephyrproject/zephyr
+./build.sh blackpill_f411ce
 ```
 
 <details><summary><b>Expected output</b></summary>
