@@ -140,7 +140,7 @@ int ncp_uart_init(void)
     return ret;
 }
 
-int uart_set_br(uint32_t br)
+int ncp_uart_set_br(uint32_t br)
 {
     static struct uart_config uart_cfg = {
         .parity = UART_CFG_PARITY_NONE,
