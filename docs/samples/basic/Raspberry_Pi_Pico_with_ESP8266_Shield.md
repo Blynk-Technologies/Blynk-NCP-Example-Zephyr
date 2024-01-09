@@ -22,7 +22,7 @@ Software:
 
 Connect Pico-ESP8266 shield to the Raspberry Pi Pico.
 
-> [!ATTENTION]
+> [!IMPORTANT]
 > The silkscreened USB port representation on the shield should be properly aligned with the actual USB port on the Raspberry Pi Pico.
 
 ## Configure the sample project
