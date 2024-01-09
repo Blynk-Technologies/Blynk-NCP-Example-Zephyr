@@ -3,8 +3,6 @@ name: build
 on:
   push:
     paths-ignore: ['**.md', '**.svg', '**.png']
-  pull_request:
-    paths-ignore: ['**.md', '**.svg', '**.png']
 
 jobs:
   build:
