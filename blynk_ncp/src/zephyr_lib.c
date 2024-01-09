@@ -16,7 +16,7 @@
 #include <zephyr/drivers/gpio.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(blynk_lib, CONFIG_BLYNK_LOG_LVL);
+LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_LOG_LVL);
 
 #include <blynk_ncp/blynk_ncp.h>
 #include <BlynkRpcClient.h>
