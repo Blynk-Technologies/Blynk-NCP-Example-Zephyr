@@ -14,7 +14,7 @@
 
 #include "BlynkRpc.h"
 
-LOG_MODULE_DECLARE(blynk_lib);
+LOG_MODULE_DECLARE(blynk_ncp);
 
 #ifndef CONFIG_BLYNK_UART_RX_BUF_SIZE
 #error CONFIG_BLYNK_UART_RX_BUF_SIZE not defined

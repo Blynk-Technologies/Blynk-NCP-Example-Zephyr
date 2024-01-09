@@ -52,12 +52,6 @@ Additional services provided by the Blynk.NCP:
 
 </details>
 
-<details><summary><b>Supported Boards</b></summary>
-
-TODO
-
-</details>
-
 ## Getting started
 
 This repository contains examples for multiple boards and use cases.

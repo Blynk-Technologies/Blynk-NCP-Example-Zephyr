@@ -9,7 +9,7 @@
     chosen {
         zephyr,console = &cdc_acm_uart0;
         zephyr,shell-uart = &cdc_acm_uart0;
-        blynk,ncp-uart = &usart3;
+        blynk,ncp-uart = &feather_serial;
         blynk,ncp-rst = &ncp_rst;
         zephyr,code-partition = &slot0_partition;
     };

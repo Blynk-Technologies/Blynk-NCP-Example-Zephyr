@@ -18,7 +18,7 @@
 
 #include <zephyr/logging/log.h>
 
-LOG_MODULE_DECLARE(blynk_lib);
+LOG_MODULE_DECLARE(blynk_ncp);
 
 typedef enum BlynkOtaState {
     OTA_STATE_IDLE,

@@ -16,7 +16,7 @@
 #include <zephyr/drivers/gpio.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(blynk_lib, CONFIG_BLYNK_LOG_LVL);
+LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_LOG_LVL);
 
 #include <blynk_ncp/blynk_ncp.h>
 #include <BlynkRpcClient.h>
@@ -30,6 +30,10 @@ LOG_MODULE_REGISTER(blynk_lib, CONFIG_BLYNK_LOG_LVL);
 #warning BLYNK_THERAD_STACK_SIZE not configured
 #define BLYNK_THERAD_STACK_SIZE          (512)
 #endif
+
+BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_TEMPLATE_ID),         "BLYNK_TEMPLATE_ID is required");
+BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_TEMPLATE_NAME),       "BLYNK_TEMPLATE_NAME is required");
+BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_FIRMWARE_VERSION),    "BLYNK_FIRMWARE_VERSION is required");
 
 #define BLYNK_FIRMWARE_BUILD_TIME __DATE__ " " __TIME__
 
@@ -313,41 +317,21 @@ int blynk_ncp_init(void)
     gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
     k_msleep(10);
 #endif
-    if(!strlen(CONFIG_BLYNK_TEMPLATE_ID))
-    {
-        LOG_ERR("CONFIG_BLYNK_TEMPLATE_ID not specified");
-        return -1;
-    }
-
-    if(!strlen(CONFIG_BLYNK_TEMPLATE_NAME))
-    {
-        LOG_ERR("CONFIG_BLYNK_TEMPLATE_NAME not specified");
-        return -1;
-    }
-
-    if(!strlen(CONFIG_BLYNK_FIRMWARE_VERSION))
-    {
-        LOG_ERR("CONFIG_BLYNK_FIRMWARE_VERSION not specified");
-        return -1;
-    }
 
     if (!ncpSetupSerial(5000))
     {
-        LOG_WRN("can't setup serial");
+        LOG_ERR("can't setup serial");
         return -1;
     }
 
     const char* ncpFwVer = "unknown";
     if (!rpc_blynk_getNcpVersion(&ncpFwVer))
     {
-        LOG_WRN("can't get NCP firmware version");
+        LOG_ERR("can't get NCP firmware version");
         return -1;
     }
 
     LOG_INF("NCP firmware: %s", ncpFwVer);
-
-    // TODO: rpc_blynk_setConfigTimeout(30*60);
-
 
     /*
      * Embed the info tag into the MCU firmware binary
@@ -371,10 +355,14 @@ int blynk_ncp_init(void)
                               BLYNK_RPC_LIB_VERSION);
 
 #if defined(CONFIG_BLYNK_VENDOR_PREFIX)
-    rpc_blynk_setVendorPrefix(CONFIG_BLYNK_VENDOR_PREFIX);
+    if (1 != sizeof(CONFIG_BLYNK_VENDOR_PREFIX)) {
+        rpc_blynk_setVendorPrefix(CONFIG_BLYNK_VENDOR_PREFIX);
+    }
 #endif
 #if defined(CONFIG_BLYNK_VENDOR_SERVER)
-    rpc_blynk_setVendorServer(CONFIG_BLYNK_VENDOR_SERVER);
+    if (1 != sizeof(CONFIG_BLYNK_VENDOR_SERVER)) {
+        rpc_blynk_setVendorServer(CONFIG_BLYNK_VENDOR_SERVER);
+    }
 #endif
 
 #if defined(CONFIG_BLYNK_NCP_ONBOARD_RGB_LED)

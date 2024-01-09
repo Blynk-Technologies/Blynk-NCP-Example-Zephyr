@@ -22,30 +22,27 @@ Software:
 
 TODO
 
-## Configure the sample project
+## Configure and build the sample project
 
 ```sh
 git clone https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr
 cd BlynkNcpExample_Zephyr
 git submodule update --init --recursive
-
-cd samples/basic
-
-export ZEPHYR_BASE=~/zephyrproject/zephyr
-export BOARD=TODO
 ```
 
 Fill in [the information from your Blynk Template](https://bit.ly/BlynkInject):
 
 ```
+cd samples/basic
 echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPxxxxxxxxx"' >> prj.conf
 echo 'CONFIG_BLYNK_TEMPLATE_NAME="OurProduct"' >> prj.conf
 ```
 
-## Build
+Build:
 
 ```sh
-TODO
+export ZEPHYR_BASE=~/zephyrproject/zephyr
+./build.sh TODO
 ```
 
 <details><summary><b>Expected output</b></summary>
