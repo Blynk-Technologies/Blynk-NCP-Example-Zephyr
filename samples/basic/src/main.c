@@ -50,7 +50,6 @@ int main(void)
     if (boot_set_confirmed_multi(0))
     {
         LOG_ERR("Can't confirm boot image");
-        return 1;
     }
 
     // Initialize Blynk.NCP
