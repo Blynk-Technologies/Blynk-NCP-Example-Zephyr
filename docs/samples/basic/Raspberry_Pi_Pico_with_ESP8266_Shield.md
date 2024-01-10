@@ -95,11 +95,8 @@ west flash --runner jlink
 > [!WARNING]
 > When assembling the board, ensure that all USB ports are disconnected from any components, and that there is no power supply connected.
 
-1. Connect Pico-ESP8266 shield to the Raspberry Pi Pico.
-
-    > [!IMPORTANT]
-    > The silkscreened USB port representation on the shield should be properly aligned with the actual USB port on the Raspberry Pi Pico.
-
+1. Connect Pico-ESP8266 shield to the Raspberry Pi Pico.  
+   **Important**: The silkscreened USB port representation on the shield should be properly aligned with the actual USB port on the Raspberry Pi Pico.
 2. Connect your device using USB. The device will appear as a `CDC-ACM` serial.
 3. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console (`115200 8N1`).
 4. The expected serial monitor output looks like this:
