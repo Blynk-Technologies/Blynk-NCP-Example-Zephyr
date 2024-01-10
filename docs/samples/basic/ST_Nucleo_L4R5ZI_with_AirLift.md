@@ -108,11 +108,11 @@ west flash --runner openocd
     *** Booting Zephyr OS build zephyr-v3.5.0-3889-ge49d174be910 ***
     [00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
     [00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
-    [00:00:03.854,000] <inf> blynk_lib: Blynk.NCP ready br 38400
-    [00:00:03.854,000] <inf> blynk_lib: setting target br 115200
-    [00:00:03.883,000] <inf> blynk_lib: Blynk.NCP ready br 115200
-    [00:00:03.886,000] <inf> blynk_lib: NCP firmware: 0.6.3
-    [00:00:03.903,000] <inf> blynk_lib: NCP state changed [Not Initialized] => [Configuration]
+    [00:00:03.854,000] <inf> blynk_ncp: Blynk.NCP ready br 38400
+    [00:00:03.854,000] <inf> blynk_ncp: setting target br 115200
+    [00:00:03.883,000] <inf> blynk_ncp: Blynk.NCP ready br 115200
+    [00:00:03.886,000] <inf> blynk_ncp: NCP firmware: 0.6.3
+    [00:00:03.903,000] <inf> blynk_ncp: NCP state changed [Not Initialized] => [Configuration]
     ```
 
 ## Use the Blynk iOS/Android app to configure your new device

@@ -101,7 +101,7 @@ After flashing the board, please disconnect the jumper.
 > [!WARNING]
 > When assembling the board, ensure that all USB ports are disconnected from any components, and that there is no power supply connected.
 
-1. AirLift FeatherWing shield to the Feather STM32F405.
+1. Insert AirLift FeatherWing shield into the Feather board.
 2. Connect your device using USB. The device will appear as a `CDC-ACM` serial.
 3. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console (`115200 8N1`).
 4. The expected serial monitor output looks like this:
@@ -110,11 +110,11 @@ After flashing the board, please disconnect the jumper.
     *** Booting Zephyr OS build zephyr-v3.5.0-3889-ge49d174be910 ***
     [00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
     [00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
-    [00:00:03.854,000] <inf> blynk_lib: Blynk.NCP ready br 38400
-    [00:00:03.854,000] <inf> blynk_lib: setting target br 115200
-    [00:00:03.883,000] <inf> blynk_lib: Blynk.NCP ready br 115200
-    [00:00:03.886,000] <inf> blynk_lib: NCP firmware: 0.6.3
-    [00:00:03.903,000] <inf> blynk_lib: NCP state changed [Not Initialized] => [Configuration]
+    [00:00:03.854,000] <inf> blynk_ncp: Blynk.NCP ready br 38400
+    [00:00:03.854,000] <inf> blynk_ncp: setting target br 115200
+    [00:00:03.883,000] <inf> blynk_ncp: Blynk.NCP ready br 115200
+    [00:00:03.886,000] <inf> blynk_ncp: NCP firmware: 0.6.3
+    [00:00:03.903,000] <inf> blynk_ncp: NCP state changed [Not Initialized] => [Configuration]
     ```
 
 ## Use the Blynk iOS/Android app to configure your new device
