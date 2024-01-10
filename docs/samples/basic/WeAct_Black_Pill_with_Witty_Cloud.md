@@ -89,32 +89,35 @@ west flash --build-dir build/basic
 
 ## Assemble the board and verify
 
-Use the solderless breadborad to connect your MCU to the NCP:
+> [!WARNING]
+> When assembling the board, ensure that all USB ports are disconnected from any components, and that there is no power supply connected.
 
-| Main    | Witty
-| ---     | ---
-| 5V      | VCC
-| G(GND)  | GND
-| A2(RX)  | TXD
-| A3(TX)  | RXD
-| A5(RST) | REST
+1. Use the solderless breadborad to connect your MCU to the NCP:
 
-![breadboard](https://raw.githubusercontent.com/Blynk-Technologies/BlynkNcpExample/main/docs/Boards/BlackPill-Witty.png)
+    | Main    | Witty
+    | ---     | ---
+    | 5V      | VCC
+    | G(GND)  | GND
+    | A2(RX)  | TXD
+    | A3(TX)  | RXD
+    | A5(RST) | REST
 
-Connect your device using USB. The device will appear as a `CDC-ACM` serial.
-Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console.
-The expected serial monitor output looks like this:
+    ![breadboard](https://raw.githubusercontent.com/Blynk-Technologies/BlynkNcpExample/main/docs/Boards/BlackPill-Witty.png)
 
-```log
-*** Booting Zephyr OS build zephyr-v3.5.0-3603-g603c3af895b0 ***
-[00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
-[00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
-[00:00:03.854,000] <inf> blynk_lib: Blynk.NCP ready br 38400
-[00:00:03.854,000] <inf> blynk_lib: setting target br 115200
-[00:00:03.883,000] <inf> blynk_lib: Blynk.NCP ready br 115200
-[00:00:03.886,000] <inf> blynk_lib: NCP firmware: 0.6.3
-[00:00:03.903,000] <inf> blynk_lib: NCP state changed [Not Initialized] => [Configuration]
-```
+2. Connect your device using USB. The device will appear as a `CDC-ACM` serial.
+3. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console (`115200 8N1`).
+4. The expected serial monitor output looks like this:
+
+    ```log
+    *** Booting Zephyr OS build zephyr-v3.5.0-3889-ge49d174be910 ***
+    [00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
+    [00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
+    [00:00:03.854,000] <inf> blynk_lib: Blynk.NCP ready br 38400
+    [00:00:03.854,000] <inf> blynk_lib: setting target br 115200
+    [00:00:03.883,000] <inf> blynk_lib: Blynk.NCP ready br 115200
+    [00:00:03.886,000] <inf> blynk_lib: NCP firmware: 0.6.3
+    [00:00:03.903,000] <inf> blynk_lib: NCP state changed [Not Initialized] => [Configuration]
+    ```
 
 ## Use the Blynk iOS/Android app to configure your new device
 
