@@ -1,6 +1,8 @@
 
 # WeAct Black Pill F411CE + Witty Cloud
 
+![main board](../../images/WeAct-Black-Pill-STM32F411.png)
+
 ## Prerequisites
 
 Hardware:

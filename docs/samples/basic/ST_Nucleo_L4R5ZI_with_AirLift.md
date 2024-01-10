@@ -7,8 +7,8 @@
 
 Hardware:
 
-- ST Nucleo L4R5ZI
-- Adafruit AirLift Shield to act as a **Network Co-Processor**
+- ST Nucleo STM32L4R5ZI
+- Adafruit AirLift Shield (ESP32) to act as a **Network Co-Processor**
 - USB to TTL Serial (3.3v) adapter or cable
 - Micro-USB cable
 

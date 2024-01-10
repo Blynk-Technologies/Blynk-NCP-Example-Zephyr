@@ -8,7 +8,7 @@
 Hardware:
 
 - Raspberry Pi Pico (RP2040)
-- Pico-ESP8266 Shield to act as a **Network Co-Processor**
+- Pico-ESP8266 Shield (ESP32) to act as a **Network Co-Processor**
 - Micro-USB cable
 - External Debugger (JLink/PicoProbe)
 
