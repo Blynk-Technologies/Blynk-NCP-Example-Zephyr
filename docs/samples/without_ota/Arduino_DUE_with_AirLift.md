@@ -3,7 +3,7 @@
 
 ![main board](../../images/Arduino-Due.png)
 
-> [!CRITICAL]
+> [!CAUTION]
 > 🚧 This sample is **Work-In-Progress** and is not fully functional yet. 🚧
 
 > [!NOTE]
