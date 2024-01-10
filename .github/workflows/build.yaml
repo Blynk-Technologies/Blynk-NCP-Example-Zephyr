@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        zephyr_ver: ["v3.5.0"] # TODO: "main"
+        zephyr_ver: ["v3.5.0", "main"]
         sample:
         - { board: nucleo_l4r5zi,                   path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: adafruit_feather_stm32f405,      path: samples/basic,        toolchains: arm-zephyr-eabi }
