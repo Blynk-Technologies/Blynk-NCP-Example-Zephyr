@@ -34,7 +34,7 @@ git submodule update --init --recursive
 
 Fill in [the information from your Blynk Template](https://bit.ly/BlynkInject):
 
-```
+```sh
 cd samples/without_ota
 echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPxxxxxxxxx"' >> prj.conf
 echo 'CONFIG_BLYNK_TEMPLATE_NAME="OurProduct"' >> prj.conf
