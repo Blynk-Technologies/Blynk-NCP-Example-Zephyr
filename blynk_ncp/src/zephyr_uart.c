@@ -108,7 +108,7 @@ uint32_t rpc_system_millis(void)
     return k_uptime_get_32();
 }
 
-int uart_init(void)
+int ncp_uart_init(void)
 {
     if (!device_is_ready(uart_dev))
     {
@@ -140,7 +140,7 @@ int uart_init(void)
     return ret;
 }
 
-int uart_set_br(uint32_t br)
+int ncp_uart_set_br(uint32_t br)
 {
     static struct uart_config uart_cfg = {
         .parity = UART_CFG_PARITY_NONE,

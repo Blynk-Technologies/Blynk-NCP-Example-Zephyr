@@ -8,6 +8,7 @@ Hardware:
 - Raspberry Pi Pico (RP2040)
 - Pico-ESP8266 Shield
 - Micro-USB cable
+- External Debugger (JLink/PicoProbe)
 
 Software:
 

@@ -54,9 +54,9 @@ static k_tid_t ncp_tid;
 
 K_MUTEX_DEFINE(ncp_rpc_mutex);
 
-void uart_init(void);          // see zephyr_uart.c
-int uart_set_br(uint32_t br);  // see zephyr_uart.c
-void ota_run(void);            // see zephyr_ota.c
+void ncp_uart_init(void);          // see zephyr_uart.c
+int ncp_uart_set_br(uint32_t br);  // see zephyr_uart.c
+void ncp_ota_run(void);            // see zephyr_ota.c
 
 void ncpMutexLock(void)
 {
@@ -73,11 +73,11 @@ static bool ncpSetupSerial(uint32_t timeout)
     const uint32_t br[] = {1200, 2400, 4800, 9600, 19200, 28800, 38400, 57600, 76800, 115200, 230400, 460800, 576000, 921600, CONFIG_BLYNK_NCP_BAUD};
     int i = 0;
 
-    uart_init();
+    ncp_uart_init();
     RpcUartFraming_init();
     do
     {
-        const int rc = uart_set_br(br[i]);
+        const int rc = ncp_uart_set_br(br[i]);
         if(rc)
         {
             LOG_ERR("can't set baudrate %d rc %d", br[i], rc);
@@ -104,7 +104,7 @@ static bool ncpSetupSerial(uint32_t timeout)
                 rpc_hw_setUartBaudRate(CONFIG_BLYNK_NCP_BAUD);
                 k_msleep(20);
 
-                if(uart_set_br(CONFIG_BLYNK_NCP_BAUD))
+                if(ncp_uart_set_br(CONFIG_BLYNK_NCP_BAUD))
                 {
                     LOG_ERR("can't set baudrate %d", CONFIG_BLYNK_NCP_BAUD);
                     return false;
@@ -134,7 +134,7 @@ void ncpThread(void*, void*, void*)
         rpc_run();
 
 #if defined(CONFIG_BOOTLOADER_MCUBOOT)
-        ota_run();
+        ncp_ota_run();
 #endif
 
 #if DT_HAS_CHOSEN(blynk_ncp_status_led)

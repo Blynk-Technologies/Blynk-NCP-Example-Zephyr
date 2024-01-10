@@ -3,17 +3,24 @@ name: build
 on:
   push:
     paths-ignore: ['**.md', '**.svg', '**.png']
-  pull_request:
-    paths-ignore: ['**.md', '**.svg', '**.png']
 
 jobs:
   build:
-    name: Build (latest)
+    name: Build (${{ matrix.zephyr_ver }}, ${{ matrix.sample.board }})
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    env:
-      BOARD: blackpill_f411ce
+    strategy:
+      fail-fast: false
+      matrix:
+        zephyr_ver: ["v3.5.0"] # TODO: "main"
+        sample:
+        - { board: nucleo_l4r5zi,                   path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: adafruit_feather_stm32f405,      path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: blackpill_f411ce,                path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: rpi_pico,                        path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: adafruit_feather_m0_basic_proto, path: samples/without_ota,  toolchains: arm-zephyr-eabi }
+#       - { board: arduino_due,                     path: samples/without_ota,  toolchains: arm-zephyr-eabi }
 
     steps:
       - name: Checkout
@@ -23,15 +30,12 @@ jobs:
       - name: Setup Zephyr
         uses: khrystynaO/zephyr-setup@main
         with:
-          zephyr-version: v3.5.0
-          toolchains: arm-zephyr-eabi
-      - name: Set Blynk ID and Name
+          zephyr-version: ${{ matrix.zephyr_ver }}
+          toolchains: ${{ matrix.sample.toolchains }}
+      - name: Build ${{ matrix.sample.path }}
         run: |
-          cd samples/basic
-          echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPL4V9okroD9"' >> prj.conf
+          cd ${{ matrix.sample.path }}
+          echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPLxxxxxxxxx"' >> prj.conf
           echo 'CONFIG_BLYNK_TEMPLATE_NAME="LED ESP32"' >> prj.conf
-      - name: Build
-        run: |
-          cd samples/basic
-          ./build.sh ${BOARD}
+          ./build.sh ${{ matrix.sample.board }}
 
