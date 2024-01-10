@@ -6,7 +6,7 @@
 > [!NOTE]
 > This board is currently not supported by MCUboot on Zephyr,
 > so OTA firmware updates using **Blynk.Air** won't work out of the box.
-> However, it will work when [this change](https://github.com/zephyrproject-rtos/zephyr/pull/67275) is accepted in Zephyr. This sample will be updated accordingly).
+> However, it will work when [this change](https://github.com/zephyrproject-rtos/zephyr/pull/67275) is accepted in Zephyr. This sample will be updated accordingly.
 
 ## Prerequisites
 
@@ -102,9 +102,6 @@ Open the `Blynk App` -> click `Add New Device` -> select `Find Devices Nearby`
 
 ## Next steps
 
-- Use [**Blynk.Air**](https://docs.blynk.io/en/blynk.console/blynk.air) to peform OTA update of your device firmware
-  - The firmware file can be found here: **`./build/basic/zephyr/zephyr.signed.bin`**
-- Learn about [Zephyr firmware signing](https://docs.zephyrproject.org/latest/develop/west/sign.html)
 - Use `west build -t menuconfig` to explore the available settings
 
 ## Troubleshooting
