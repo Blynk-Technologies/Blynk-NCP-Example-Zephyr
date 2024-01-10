@@ -1,35 +1,19 @@
 
-# WeAct Black Pill F411CE + Witty Cloud NCP
+# WeAct Black Pill F411CE + Witty Cloud
 
 ## Prerequisites
 
 Hardware:
 
 - WeAct Black Pill V2.0 (STM32F411CE)
-- Witty Cloud board (ESP8266)
+- Witty Cloud board (ESP8266) to act as a **Network Co-Processor**
 - Breadboard and jumper wires
 - USB Type C cable
 
 Software:
 
 - Latest official [Zephyr sources and SDK][zephyr_sdk]
-- Blynk.NCP [firmware binary][blynk_ncp_binary]
-
-## Flash the Network Co-Processor
-
-👉 Follow the detailed [Witty Cloud flashing guide](../../flashing_ncp/Witty_Cloud.md)
-
-## Assemble the board
-
-| Main    | Witty
-| ---     | ---
-| 5V      | VCC
-| G(GND)  | GND
-| A2(RX)  | TXD
-| A3(TX)  | RXD
-| A5(RST) | REST
-
-![breadboard](https://raw.githubusercontent.com/Blynk-Technologies/BlynkNcpExample/main/docs/Boards/BlackPill-Witty.png)
+- Blynk.NCP [firmware binary][blynk_ncp_binary] (more on that later)
 
 ## Configure and build the sample project
 
@@ -99,7 +83,25 @@ west flash --build-dir build/mcuboot
 west flash --build-dir build/basic
 ```
 
-The device will appear as a `CDC-ACM` serial.
+## Flash the Network Co-Processor
+
+👉 Follow the detailed [Witty Cloud flashing guide](../../flashing_ncp/Witty_Cloud.md)
+
+## Assemble the board and verify
+
+Use the solderless breadborad to connect your MCU to the NCP:
+
+| Main    | Witty
+| ---     | ---
+| 5V      | VCC
+| G(GND)  | GND
+| A2(RX)  | TXD
+| A3(TX)  | RXD
+| A5(RST) | REST
+
+![breadboard](https://raw.githubusercontent.com/Blynk-Technologies/BlynkNcpExample/main/docs/Boards/BlackPill-Witty.png)
+
+Connect your device using USB. The device will appear as a `CDC-ACM` serial.
 Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console.
 The expected serial monitor output looks like this:
 

@@ -6,25 +6,14 @@
 Hardware:
 
 - Raspberry Pi Pico (RP2040)
-- Pico-ESP8266 Shield
+- Pico-ESP8266 Shield to act as a **Network Co-Processor**
 - Micro-USB cable
 - External Debugger (JLink/PicoProbe)
 
 Software:
 
 - Latest official [Zephyr sources and SDK][zephyr_sdk]
-- Blynk.NCP [firmware binary][blynk_ncp_binary]
-
-## Flash the Network Co-Processor
-
-👉 Follow the detailed [Pico-ESP8266 flashing guide](../../flashing_ncp/Pico_ESP8266.md)
-
-## Assemble the board
-
-Connect Pico-ESP8266 shield to the Raspberry Pi Pico.
-
-> [!IMPORTANT]
-> The silkscreened USB port representation on the shield should be properly aligned with the actual USB port on the Raspberry Pi Pico.
+- Blynk.NCP [firmware binary][blynk_ncp_binary] (more on that later)
 
 ## Configure and build the sample project
 
@@ -95,7 +84,18 @@ Wrote 56320 bytes to zephyr.uf2
 west flash --runner jlink
 ```
 
-The device will appear as a `CDC-ACM` serial.
+## Flash the Network Co-Processor
+
+👉 Follow the detailed [Pico-ESP8266 flashing guide](../../flashing_ncp/Pico_ESP8266.md)
+
+## Assemble the board and verify
+
+Connect Pico-ESP8266 shield to the Raspberry Pi Pico.
+
+> [!IMPORTANT]
+> The silkscreened USB port representation on the shield should be properly aligned with the actual USB port on the Raspberry Pi Pico.
+
+Connect your device using USB. The device will appear as a `CDC-ACM` serial.
 Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console.
 The expected serial monitor output looks like this:
 

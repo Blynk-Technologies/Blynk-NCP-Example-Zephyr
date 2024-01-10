@@ -1,26 +1,18 @@
 
-# TODO + TODO NCP
+# TODO + TODO
 
 ## Prerequisites
 
 Hardware:
 
 - TODO
-- TODO
+- TODO to act as a **Network Co-Processor**
 - USB cable
 
 Software:
 
 - Latest official [Zephyr sources and SDK][zephyr_sdk]
-- Blynk.NCP [firmware binary][blynk_ncp_binary]
-
-## Flash the Network Co-Processor
-
-👉 Follow the detailed [??? flashing guide](../../flashing_ncp/???.md)
-
-## Assemble the board
-
-TODO
+- Blynk.NCP [firmware binary][blynk_ncp_binary] (more on that later)
 
 ## Configure and build the sample project
 
@@ -64,6 +56,14 @@ west flash --build-dir build/mcuboot
 # Flash sample
 west flash --build-dir build/basic
 ```
+
+## Flash the Network Co-Processor
+
+👉 Follow the detailed [??? flashing guide](../../flashing_ncp/???.md)
+
+## Assemble the board and verify
+
+TODO
 
 TODO: Instructions on how to access the console (connect a UART adapter, etc.)
 Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console.
