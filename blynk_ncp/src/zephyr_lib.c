@@ -324,6 +324,17 @@ int blynk_ncp_init(void)
         return -1;
     }
 
+//#if ! DT_HAS_CHOSEN(blynk_ncp_rst)
+    LOG_INF("NCP softreboot");
+    rpc_ncp_reboot();
+    k_msleep(50);
+    if (!ncpSetupSerial(5000))
+    {
+        LOG_ERR("can't setup serial");
+        return -1;
+    }
+//#endif
+
     const char* ncpFwVer = "unknown";
     if (!rpc_blynk_getNcpVersion(&ncpFwVer))
     {
