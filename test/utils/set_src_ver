@@ -1,0 +1,6 @@
+#!/bin/env bash
+
+if [ -z ${PRJDIR+x} ]; then PRJDIR=${PWD}; fi
+
+sed -i '/^CONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION=/d' ${PRJDIR}/${SAMPLE_PATH}/prj.conf
+echo "CONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION=\"${1}\"" >> ${PRJDIR}/${SAMPLE_PATH}/prj.conf
