@@ -124,7 +124,15 @@ config BLYNK_UART_TX_BUF_SIZE
 
 
 config BLYNK_LOG_LVL
-    int "logging level"
+    int "Logging level"
     default LOG_DEFAULT_LEVEL
+
+config BLYNK_THREAD_PRIO
+    int "Blynk thread proirty"
+    default MAIN_THREAD_PRIORITY
+
+config BLYNK_THERAD_STACK_SIZE
+    int "Blynk thread stack size"
+    default 512
 
 endmenu

@@ -21,14 +21,14 @@ LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_LOG_LVL);
 #include <blynk_ncp/blynk_ncp.h>
 #include <BlynkRpcClient.h>
 
-#ifndef BLYNK_THREAD_PRIO
-#warning BLYNK_THREAD_PRIO not configured
-#define BLYNK_THREAD_PRIO     (CONFIG_NUM_PREEMPT_PRIORITIES - 1)
+#ifndef CONFIG_BLYNK_THREAD_PRIO
+#warning CONFIG_BLYNK_THREAD_PRIO not configured
+#define CONFIG_BLYNK_THREAD_PRIO     (CONFIG_NUM_PREEMPT_PRIORITIES - 1)
 #endif
 
-#ifndef BLYNK_THERAD_STACK_SIZE
-#warning BLYNK_THERAD_STACK_SIZE not configured
-#define BLYNK_THERAD_STACK_SIZE          (512)
+#ifndef CONFIG_BLYNK_THERAD_STACK_SIZE
+#warning CONFIG_BLYNK_THERAD_STACK_SIZE not configured
+#define CONFIG_BLYNK_THERAD_STACK_SIZE          (512)
 #endif
 
 BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_TEMPLATE_ID),         "BLYNK_TEMPLATE_ID is required");
@@ -46,7 +46,7 @@ static const struct gpio_dt_spec staus_led = GPIO_DT_SPEC_GET(DT_CHOSEN(blynk_nc
 static const struct gpio_dt_spec ncp_rst = GPIO_DT_SPEC_GET(DT_CHOSEN(blynk_ncp_rst), gpios);
 #endif
 
-K_THREAD_STACK_DEFINE(ncp_stack_area, BLYNK_THERAD_STACK_SIZE);
+K_THREAD_STACK_DEFINE(ncp_stack_area, CONFIG_BLYNK_THERAD_STACK_SIZE);
 static struct k_thread ncp_thread_data;
 static k_tid_t ncp_tid;
 
@@ -394,7 +394,7 @@ int blynk_ncp_init(void)
                                 K_THREAD_STACK_SIZEOF(ncp_stack_area),
                                 ncpThread,
                                 NULL, NULL, NULL,
-                                BLYNK_THREAD_PRIO, 0, K_NO_WAIT);
+                                CONFIG_BLYNK_THREAD_PRIO, 0, K_NO_WAIT);
 
     k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(5));
 
