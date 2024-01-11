@@ -12,6 +12,9 @@ manifest:
       revision: "main"
       import:
         name-allowlist:
-          - cmsis      # required by ARM port
-          - hal_stm32  # required by STM32
+          - cmsis
+          - hal_stm32
+          - hal_rpi_pico
+          - hal_atmel
+          - mcuboot
 
