@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) 2024 Blynk Technologies Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+    chosen {
+        /* Renesas RA4M1 has only one UART which we want to use for NCP,
+         * disable Console until Zephyr supports USB CDC_ACM
+         */
+        /delete-property/ zephyr,console;
+        /delete-property/ zephyr,shell-uart;
+
+        blynk,ncp-uart = &uart2;
+        blynk,ncp-rst = &ncp_rst;
+    };
+
+    outputs {
+        compatible = "gpio-leds";
+        ncp_rst: ncp_rst {
+            gpios = <&ioport1 2 GPIO_ACTIVE_LOW>; /* D5 */
+            label = "NCP RST";
+        };
+    };
+};

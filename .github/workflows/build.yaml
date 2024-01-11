@@ -20,7 +20,7 @@ jobs:
         - { board: blackpill_f411ce,                path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: rpi_pico,                        path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: adafruit_feather_m0_basic_proto, path: samples/without_ota,  toolchains: arm-zephyr-eabi }
-#       - { board: arduino_due,                     path: samples/without_ota,  toolchains: arm-zephyr-eabi }
+        - { board: arduino_uno_r4_minima,           path: samples/without_ota,  toolchains: arm-zephyr-eabi }
 
     steps:
       - name: Checkout
@@ -36,6 +36,6 @@ jobs:
         run: |
           cd ${{ matrix.sample.path }}
           echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPLxxxxxxxxx"' >> prj.conf
-          echo 'CONFIG_BLYNK_TEMPLATE_NAME="LED ESP32"' >> prj.conf
+          echo 'CONFIG_BLYNK_TEMPLATE_NAME="Test Device"' >> prj.conf
           ./build.sh ${{ matrix.sample.board }}
 
