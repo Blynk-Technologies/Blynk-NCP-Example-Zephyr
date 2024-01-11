@@ -55,19 +55,19 @@ image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
-[169/169] cd build/basic/zephyr && /ho...elf-file=build/basic/zephyr/zephyr.elf
+[169/169] cd ....../build/basic/zephyr/zephyr.elf
 [11/16] Performing build step for 'mcuboot'
 [1/268] Preparing syscall dependency handling
 
 [3/268] Generating include/generated/version.h
--- Zephyr version: 3.5.99 (/home/vshymanskyy/zephyrproject/zephyr), build: zephyr-v3.5.0-3603-g603c3af895b0
+-- Zephyr version: 3.5.99 (/home/user/zephyrproject/zephyr), build: zephyr-v3.5.0-3603-g603c3af895b0
 [267/268] Linking C executable zephyr/zephyr.elf
 Memory region         Used Size  Region Size  %age Used
            FLASH:       27822 B        32 KB     84.91%
              RAM:       24256 B       128 KB     18.51%
         IDT_LIST:          0 GB         2 KB      0.00%
 Generating files from build/mcuboot/zephyr/zephyr.elf for board: blackpill_f411ce
-[268/268] cd build/mcuboot/zephyr && /...f-file=build/mcuboot/zephyr/zephyr.elf
+[268/268] cd ....../build/mcuboot/zephyr/zephyr.elf
 [16/16] Completed 'mcuboot'
 ```
 

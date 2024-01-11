@@ -54,8 +54,8 @@ Memory region         Used Size  Region Size  %age Used
            FLASH:       41324 B       232 KB     17.39%
              RAM:       20864 B        32 KB     63.67%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/BlynkNcpExample_Zephyr/samples/without_ota/build/zephyr/zephyr.elf for board: adafruit_feather_m0_basic_proto
-[139/139] cd /data/_Business/BlynkNcpExample_Zephy...Zephyr/samples/without_ota/build/zephyr/zephyr.elf
+Generating files from build/zephyr/zephyr.elf for board: adafruit_feather_m0_basic_proto
+[139/139] cd ....../build/zephyr/zephyr.elf
 ```
 
 </details>

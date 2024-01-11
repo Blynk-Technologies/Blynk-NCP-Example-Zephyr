@@ -51,25 +51,25 @@ Memory region         Used Size  Region Size  %age Used
              RAM:         23 KB       128 KB     17.97%
              CCM:          0 GB        64 KB      0.00%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/BlynkNcpExample_Zephyr/samples/basic/build/basic/zephyr/zephyr.elf for board: adafruit_feather_stm32f405
+Generating files from build/basic/zephyr/zephyr.elf for board: adafruit_feather_stm32f405
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
-[174/174] cd /data/_Business/BlynkNcpExample_Zephy...Zephyr/samples/basic/build/basic/zephyr/zephyr.elf
+[174/174] cd ....../build/basic/zephyr/zephyr.elf
 [11/16] Performing build step for 'mcuboot'
 [1/273] Preparing syscall dependency handling
 
 [3/273] Generating include/generated/version.h
--- Zephyr version: 3.5.99 (/home/vshymanskyy/zephyrproject/zephyr), build: zephyr-v3.5.0-3889-ge49d174be910
+-- Zephyr version: 3.5.99 (/home/user/zephyrproject/zephyr), build: zephyr-v3.5.0-3889-ge49d174be910
 [272/273] Linking C executable zephyr/zephyr.elf
 Memory region         Used Size  Region Size  %age Used
            FLASH:       31942 B        64 KB     48.74%
              RAM:       18304 B       128 KB     13.96%
              CCM:          0 GB        64 KB      0.00%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/BlynkNcpExample_Zephyr/samples/basic/build/mcuboot/zephyr/zephyr.elf for board: adafruit_feather_stm32f405
-[273/273] cd /data/_Business/BlynkNcpExample_Zephy...phyr/samples/basic/build/mcuboot/zephyr/zephyr.elf
+Generating files from build/mcuboot/zephyr/zephyr.elf for board: adafruit_feather_stm32f405
+[273/273] cd ....../build/mcuboot/zephyr/zephyr.elf
 [16/16] Completed 'mcuboot'
 ```
 

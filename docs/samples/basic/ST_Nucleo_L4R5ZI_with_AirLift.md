@@ -50,24 +50,24 @@ Memory region         Used Size  Region Size  %age Used
            FLASH:       44812 B       252 KB     17.37%
              RAM:       17344 B       640 KB      2.65%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/BlynkNcpExample_Zephyr/samples/basic/build/basic/zephyr/zephyr.elf for board: nucleo_l4r5zi
+Generating files from build/basic/zephyr/zephyr.elf for board: nucleo_l4r5zi
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
-[154/154] cd /data/_Business/BlynkNcpExample_Zephy...Zephyr/samples/basic/build/basic/zephyr/zephyr.elf
+[154/154] cd ....../build/basic/zephyr/zephyr.elf
 [11/16] Performing build step for 'mcuboot'
 [1/266] Preparing syscall dependency handling
 
 [4/266] Generating include/generated/version.h
--- Zephyr version: 3.5.99 (/home/vshymanskyy/zephyrproject/zephyr), build: zephyr-v3.5.0-3889-ge49d174be910
+-- Zephyr version: 3.5.99 (/home/user/zephyrproject/zephyr), build: zephyr-v3.5.0-3889-ge49d174be910
 [265/266] Linking C executable zephyr/zephyr.elf
 Memory region         Used Size  Region Size  %age Used
            FLASH:       28244 B       128 KB     21.55%
              RAM:       18112 B       640 KB      2.76%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/BlynkNcpExample_Zephyr/samples/basic/build/mcuboot/zephyr/zephyr.elf for board: nucleo_l4r5zi
-[266/266] cd /data/_Business/BlynkNcpExample_Zephy...phyr/samples/basic/build/mcuboot/zephyr/zephyr.elf
+Generating files from build/mcuboot/zephyr/zephyr.elf for board: nucleo_l4r5zi
+[266/266] cd ....../build/mcuboot/zephyr/zephyr.elf
 [16/16] Completed 'mcuboot'
 ```
 

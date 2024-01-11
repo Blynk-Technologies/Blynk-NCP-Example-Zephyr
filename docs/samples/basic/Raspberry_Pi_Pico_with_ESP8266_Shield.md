@@ -50,14 +50,14 @@ Memory region         Used Size  Region Size  %age Used
            FLASH:       52388 B     907904 B      5.77%
              RAM:       24768 B       264 KB      9.16%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/xplore_fw_andrii/blynk_over_zephyr/samples/basic/build/basic/zephyr/zephyr.elf for board: rpi_pico
+Generating files from build/basic/zephyr/zephyr.elf for board: rpi_pico
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
 image.py: sign the payload
 ...
 [14/271] Performing build step for 'second_stage_bootloader'
-[1/2] Building ASM object CMakeFiles/boot_stage2.dir/home/vshymanskyy/zephyrproject/modules/hal/rpi_pico/src/rp2_common/boot_stage2/boot2_w25q080.S.obj
+[1/2] Building ASM object CMakeFiles/boot_stage2.dir/home/user/zephyrproject/modules/hal/rpi_pico/src/rp2_common/boot_stage2/boot2_w25q080.S.obj
 [2/2] Linking ASM executable boot_stage2
 [270/271] Linking C executable zephyr/zephyr.elf
 Memory region         Used Size  Region Size  %age Used
@@ -65,10 +65,10 @@ Memory region         Used Size  Region Size  %age Used
            FLASH:       27802 B      65280 B     42.59%
              RAM:       24832 B       264 KB      9.19%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/xplore_fw_andrii/blynk_over_zephyr/samples/basic/build/mcuboot/zephyr/zephyr.elf for board: rpi_pico
+Generating files from build/mcuboot/zephyr/zephyr.elf for board: rpi_pico
 Converting to uf2, output size: 56320, start address: 0x10000000
 Wrote 56320 bytes to zephyr.uf2
-[271/271] cd /data/_Business/xplore_fw_andrii/bl...yr/samples/basic/build/mcuboot/zephyr/zephyr.elf
+[271/271] cd ....../build/mcuboot/zephyr/zephyr.elf
 [16/16] Completed 'mcuboot'
 ```
 

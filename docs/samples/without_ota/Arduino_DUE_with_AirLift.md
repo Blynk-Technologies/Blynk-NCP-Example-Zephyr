@@ -57,8 +57,8 @@ Memory region         Used Size  Region Size  %age Used
            FLASH:       33704 B       512 KB      6.43%
              RAM:       16896 B        96 KB     17.19%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from /data/_Business/BlynkNcpExample_Zephyr/samples/without_ota/build/zephyr/zephyr.elf for board: arduino_due
-[139/139] cd /data/_Business/BlynkNcpExample_Zephy...Zephyr/samples/without_ota/build/zephyr/zephyr.elf
+Generating files from build/zephyr/zephyr.elf for board: arduino_due
+[139/139] cd ....../build/zephyr/zephyr.elf
 ```
 
 </details>
