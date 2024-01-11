@@ -19,7 +19,7 @@ Software:
 1. Solder the [Arduino header pins](https://learn.adafruit.com/adafruit-airlift-shield-esp32-wifi-co-processor/assembly-2) (the 2x3 ISP header is not needed)
 2. Bridge the `TX(0)`, `RX(1)`, and `RST(5)` jumper pads (using small amount of solder)
 
-![jumpers](../images/AirLift-Shield-Bottom.png)
+![jumpers](../images/shields/AirLift-Shield-Bottom.png)
 
 ## Connect the TTL Serial adapter or cable
 
@@ -35,7 +35,7 @@ Software:
 > [!TIP]
 > Utilize the prototyping area along with jumper wires for a more straightforward connection process
 
-![connection](../images/AirLift-Shield-Top.png)
+![connection](../images/shields/AirLift-Shield-Top.png)
 
 ## Flash Blynk.NCP firmware
 

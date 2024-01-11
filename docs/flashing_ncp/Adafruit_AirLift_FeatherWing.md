@@ -20,7 +20,7 @@ Software:
 1. Solder the [Feather header pins](https://learn.adafruit.com/adafruit-airlift-featherwing-esp32-wifi-co-processor-featherwing/assembly-2)
 2. Bridge the `ESPTX`, `ESPRX`, and `ESPGPIO0` jumper pads (using a small amount of solder)
 
-![jumpers](../images/AirLift-Feater-Bottom.png)
+![jumpers](../images/shields/AirLift-Feater-Bottom.png)
 
 ## Connect the TTL Serial adapter or cable
 
@@ -36,7 +36,7 @@ Software:
 > [!TIP]
 > Utilize a solderless breadboard along with jumper wires for a more straightforward connection process
 
-![connection](../images/AirLift-Feater-Top.png)
+![connection](../images/shields/AirLift-Feater-Top.png)
 
 ## Flash Blynk.NCP firmware
 

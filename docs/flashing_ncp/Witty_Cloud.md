@@ -14,7 +14,7 @@ Software:
 
 ## Flash Blynk.NCP firmware
 
-![assembled](../images/ESP8266-Witty-Cloud.png)
+![assembled](../images/shields/ESP8266-Witty-Cloud.png)
 
 1. Assemble the Witty Cloud board (insert the top part into the bottom part)
 2. Connect the board to your PC **using the bottom USB port**

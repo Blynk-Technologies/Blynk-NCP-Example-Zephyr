@@ -21,7 +21,7 @@ It is recommended to route the `VCC_EN` of the voltage regulator to the GPIO hea
 1. Remove the `0R` resistor labeled `VSYS`
 2. Place the same resistor on `GP14` pads (or just create a solder bridge)
 
-![jumpers](../images/Pico-ESP8266-Top.png)
+![jumpers](../images/shields/Pico-ESP8266-Top.png)
 
 > [!TIP]
 > Alternatively (depending on your application) you may want to route the ESP8266 `REST` pin to `GP15`.
@@ -37,7 +37,7 @@ It is recommended to route the `VCC_EN` of the voltage regulator to the GPIO hea
 | GP1(TX)   | RX
 | GP0(RX)   | TX
 
-![connection](../images/Pico-ESP8266-Bottom.png)
+![connection](../images/shields/Pico-ESP8266-Bottom.png)
 
 ## Flash Blynk.NCP firmware
 
