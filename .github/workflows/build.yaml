@@ -33,7 +33,7 @@ jobs:
       - name: Setup Zephyr
         uses: khrystynaO/zephyr-setup@khrystynaO/feature/manifest-file
         with:
-          manifest-file: hello_world/west_${{ matrix.zephyr_ver }}.yaml
+          manifest-file: tests/west_${{ matrix.zephyr_ver }}.yaml
           toolchains: ${{ matrix.sample.toolchains }}
       - name: Build ${{ matrix.sample.path }}
         run: |
