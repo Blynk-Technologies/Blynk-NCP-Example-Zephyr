@@ -22,15 +22,18 @@ jobs:
         - { board: adafruit_feather_m0_basic_proto, path: samples/without_ota,  toolchains: arm-zephyr-eabi }
         - { board: arduino_uno_r4_minima,           path: samples/without_ota,  toolchains: arm-zephyr-eabi }
 
+    # Arduino UNOR4 Minima is not supported on v3.5.0
+    if: ${{ matrix.zephyr_ver != 'v3.5.0' && matrix.sample.board != 'arduino_uno_r4_minima' }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: 'true'
       - name: Setup Zephyr
-        uses: khrystynaO/zephyr-setup@main
+        uses: khrystynaO/zephyr-setup@khrystynaO/feature/manifest-file
         with:
-          zephyr-version: ${{ matrix.zephyr_ver }}
+          manifest-file: hello_world/west_${{ matrix.zephyr_ver }}.yaml
           toolchains: ${{ matrix.sample.toolchains }}
       - name: Build ${{ matrix.sample.path }}
         run: |
