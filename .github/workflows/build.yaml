@@ -37,6 +37,7 @@ jobs:
           toolchains: ${{ matrix.sample.toolchains }}
       - name: Build ${{ matrix.sample.path }}
         run: |
+          echo "ZEPHYR_BASE=${ZEPHYR_BASE}"
           cd ${{ matrix.sample.path }}
           echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPLxxxxxxxxx"' >> prj.conf
           echo 'CONFIG_BLYNK_TEMPLATE_NAME="Test Device"' >> prj.conf
