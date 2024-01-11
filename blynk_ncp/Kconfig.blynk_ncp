@@ -135,4 +135,12 @@ config BLYNK_THERAD_STACK_SIZE
     int "Blynk thread stack size"
     default 512
 
+config BLYNK_NCP_PING_INTERVAL
+    int "Delay between NCP pings"
+    default 5
+
+config BLYNK_NCP_ERR_PING_CNT
+    int "Num of unsuccessful NCP pings before NCP reinit"
+    default 8
+
 endmenu

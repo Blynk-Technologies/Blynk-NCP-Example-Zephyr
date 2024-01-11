@@ -31,6 +31,16 @@ LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_LOG_LVL);
 #define CONFIG_BLYNK_THERAD_STACK_SIZE          (512)
 #endif
 
+#ifndef CONFIG_BLYNK_NCP_ERR_PING_CNT
+#warning CONFIG_BLYNK_NCP_ERR_PING_CNT not configured
+#define CONFIG_BLYNK_NCP_ERR_PING_CNT          (8)
+#endif
+
+#ifndef CONFIG_BLYNK_NCP_PING_INTERVAL
+#warning CONFIG_BLYNK_NCP_PING_INTERVAL not configured
+#define CONFIG_BLYNK_NCP_PING_INTERVAL          (5)
+#endif
+
 BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_TEMPLATE_ID),         "BLYNK_TEMPLATE_ID is required");
 BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_TEMPLATE_NAME),       "BLYNK_TEMPLATE_NAME is required");
 BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_FIRMWARE_VERSION),    "BLYNK_FIRMWARE_VERSION is required");
@@ -173,7 +183,7 @@ static void ncpPingHandler(struct k_work *work)
     static int err_num = 0;
     if (RPC_STATUS_OK != rpc_ncp_ping())
     {
-        if(err_num < 3)
+        if(err_num < CONFIG_BLYNK_NCP_ERR_PING_CNT)
         {
             err_num++;
             LOG_INF("NCP ping error. attempt [%d]", err_num);
@@ -407,7 +417,7 @@ int blynk_ncp_init(void)
                                 NULL, NULL, NULL,
                                 CONFIG_BLYNK_THREAD_PRIO, 0, K_NO_WAIT);
 
-    k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(5));
+    k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(CONFIG_BLYNK_NCP_PING_INTERVAL));
 
     return 0;
 }
