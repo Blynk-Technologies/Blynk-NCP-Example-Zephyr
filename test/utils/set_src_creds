@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+if [ -z ${PRJDIR+x} ]; then PRJDIR=${PWD}; fi
+
+sed -i '/^CONFIG_BLYNK_TEMPLATE_ID=/d' ${PRJDIR}/${SAMPLE_PATH}/prj.conf
+echo "CONFIG_BLYNK_TEMPLATE_ID=\"${BLYNK_TEMPLATE_ID}\"" >> ${PRJDIR}/${SAMPLE_PATH}/prj.conf
+
+sed -i '/^CONFIG_BLYNK_TEMPLATE_NAME=/d' ${PRJDIR}/${SAMPLE_PATH}/prj.conf
+echo "CONFIG_BLYNK_TEMPLATE_NAME=\"${BLYNK_TEMPLATE_NAME}\"" >> ${PRJDIR}/${SAMPLE_PATH}/prj.conf

@@ -1,0 +1,6 @@
+#!/bin/env bash
+
+curl -s https://${BLYNK_SERVER}/external/api/update?token=${BLYNK_AUTH_TOKEN}\&v255="mcu%20ping"
+sleep 5
+curl -s https://${BLYNK_SERVER}/external/api/get?token=${BLYNK_AUTH_TOKEN}\&v255 | grep OK > /dev/null
+exit $?
