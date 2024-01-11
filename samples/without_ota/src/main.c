@@ -68,7 +68,7 @@ int main(void)
     blynk_ncp_init();
 
     // Start a periodic timer
-    k_timer_start(&periodic_timer, K_SECONDS(10), K_SECONDS(10));
+    k_timer_start(&periodic_timer, K_SECONDS(1), K_SECONDS(1));
 
     k_sleep(K_FOREVER);
 
