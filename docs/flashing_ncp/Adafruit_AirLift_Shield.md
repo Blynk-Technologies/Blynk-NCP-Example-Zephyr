@@ -19,7 +19,7 @@ Software:
 1. Solder the [Arduino header pins](https://learn.adafruit.com/adafruit-airlift-shield-esp32-wifi-co-processor/assembly-2) (the 2x3 ISP header is not needed)
 2. Bridge the `TX(0)`, `RX(1)`, and `RST(5)` jumper pads (using small amount of solder)
 
-![jumpers](../images/AirLift-Shield-Bottom.png)
+![jumpers](../images/shields/AirLift-Shield-Bottom.png)
 
 ## Connect the TTL Serial adapter or cable
 
@@ -35,7 +35,7 @@ Software:
 > [!TIP]
 > Utilize the prototyping area along with jumper wires for a more straightforward connection process
 
-![connection](../images/AirLift-Shield-Top.png)
+![connection](../images/shields/AirLift-Shield-Top.png)
 
 ## Flash Blynk.NCP firmware
 
@@ -46,7 +46,37 @@ esptool.py --baud 460800 --before default_reset --after hard_reset write_flash -
 <details><summary><b>Expected esptool output</b></summary>
 
 ```log
-TODO
+esptool.py v4.5.1
+Found 1 serial ports
+Serial port /dev/ttyUSB0
+Connecting.........
+Detecting chip type... Unsupported detection protocol, switching and trying again...
+Connecting....
+Detecting chip type... ESP32
+Chip is ESP32-D0WD (revision v1.0)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: b4:e6:2d:xx:xx:xx
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Erasing flash (this may take a while)...
+Chip erase completed successfully in 9.2s
+Compressed 1338368 bytes to 832842...
+Writing at 0x00000000... (1 %)
+Writing at 0x000115a2... (3 %)
+...
+Writing at 0x0013c5c1... (98 %)
+Writing at 0x00141b66... (100 %)
+Wrote 1338368 bytes (832842 compressed) at 0x00000000 in 20.0 seconds (effective 536.3 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
 ```
 
 </details>

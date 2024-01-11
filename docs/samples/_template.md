@@ -1,26 +1,20 @@
 
-# TODO + TODO NCP
+# TODO + TODO
+
+![main board](../../images/TODO.png)
 
 ## Prerequisites
 
 Hardware:
 
 - TODO
-- TODO
+- TODO to act as a **Network Co-Processor**
 - USB cable
 
 Software:
 
 - Latest official [Zephyr sources and SDK][zephyr_sdk]
-- Blynk.NCP [firmware binary][blynk_ncp_binary]
-
-## Flash the Network Co-Processor
-
-👉 Follow the detailed [??? flashing guide](../../flashing_ncp/???.md)
-
-## Assemble the board
-
-TODO
+- Blynk.NCP [firmware binary][blynk_ncp_binary] (more on that later)
 
 ## Configure and build the sample project
 
@@ -32,7 +26,7 @@ git submodule update --init --recursive
 
 Fill in [the information from your Blynk Template](https://bit.ly/BlynkInject):
 
-```
+```sh
 cd samples/basic
 echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPxxxxxxxxx"' >> prj.conf
 echo 'CONFIG_BLYNK_TEMPLATE_NAME="OurProduct"' >> prj.conf
@@ -65,20 +59,31 @@ west flash --build-dir build/mcuboot
 west flash --build-dir build/basic
 ```
 
-TODO: Instructions on how to access the console (connect a UART adapter, etc.)
-Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console.
-The expected serial monitor output looks like this:
+## Flash the Network Co-Processor
 
-```log
-*** Booting Zephyr OS build zephyr-v3.5.0-3603-g603c3af895b0 ***
-[00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
-[00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
-[00:00:03.854,000] <inf> blynk_lib: Blynk.NCP ready br 38400
-[00:00:03.854,000] <inf> blynk_lib: setting target br 115200
-[00:00:03.883,000] <inf> blynk_lib: Blynk.NCP ready br 115200
-[00:00:03.886,000] <inf> blynk_lib: NCP firmware: 0.6.3
-[00:00:03.903,000] <inf> blynk_lib: NCP state changed [Not Initialized] => [Configuration]
-```
+👉 Follow the detailed [??? flashing guide](../../flashing_ncp/???.md)
+
+## Assemble the board and verify
+
+> [!WARNING]
+> When assembling the board, ensure that all USB ports are disconnected from any components, and that there is no power supply connected.
+
+1. Connect TODO to the TODO.
+2. TODO: Instructions on how to access the console (connect a UART adapter, etc.)
+3. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console (`115200 8N1`).
+4. TODO: Press `Reset` button?
+5. The expected serial monitor output looks like this:
+
+    ```log
+    *** Booting Zephyr OS build zephyr-v3.5.0-3889-ge49d174be910 ***
+    [00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
+    [00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
+    [00:00:03.854,000] <inf> blynk_lib: Blynk.NCP ready br 38400
+    [00:00:03.854,000] <inf> blynk_lib: setting target br 115200
+    [00:00:03.883,000] <inf> blynk_lib: Blynk.NCP ready br 115200
+    [00:00:03.886,000] <inf> blynk_lib: NCP firmware: 0.6.3
+    [00:00:03.903,000] <inf> blynk_lib: NCP state changed [Not Initialized] => [Configuration]
+    ```
 
 ## Use the Blynk iOS/Android app to configure your new device
 
