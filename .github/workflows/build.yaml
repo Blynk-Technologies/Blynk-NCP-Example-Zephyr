@@ -38,6 +38,7 @@ jobs:
       - name: Build ${{ matrix.sample.path }}
         run: |
           echo "ZEPHYR_BASE=${ZEPHYR_BASE}"
+          echo -n "Zephyr OS: "; git -C $ZEPHYR_BASE --no-pager log --abbrev-commit --pretty=oneline -1
           cd ${{ matrix.sample.path }}
           echo 'CONFIG_BLYNK_TEMPLATE_ID="TMPLxxxxxxxxx"' >> prj.conf
           echo 'CONFIG_BLYNK_TEMPLATE_NAME="Test Device"' >> prj.conf
