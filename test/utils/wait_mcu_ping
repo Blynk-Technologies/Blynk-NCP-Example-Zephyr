@@ -1,0 +1,12 @@
+#!/bin/env bash
+
+for i in $(seq 1 ${1})
+do
+    if $(readlink -f $0 | xargs dirname)/mcu_ping
+    then
+        exit 0
+    else
+        sleep ${2}
+    fi
+done
+exit 1

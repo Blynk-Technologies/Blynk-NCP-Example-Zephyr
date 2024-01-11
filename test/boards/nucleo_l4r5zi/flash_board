@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+if [ -z ${PRJDIR+x} ]; then PRJDIR=${PWD}; fi
+
+cd ${PRJDIR}/${SAMPLE_PATH}
+west flash
+r=${?}
+cd - &>> /dev/null
+exit ${r}

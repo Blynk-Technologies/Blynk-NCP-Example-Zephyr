@@ -1,0 +1,7 @@
+if [ -z ${BLYNK_SERVER+x} ]; then export BLYNK_SERVER="fra1.blynk.cloud"; fi
+if [ -z ${MY_IP+x} ]; then export MY_IP="192.168.126.122"; fi
+if [ -z ${OTA_PORT+x} ]; then export OTA_PORT=$((50000 + RANDOM % 10000)); fi
+if [ -z ${ZEPHYR_BASE+x} ]; then export ZEPHYR_BASE="$(realpath ~/zephyrproject/zephyr)"; fi
+if [ -z ${SAMPLE_PATH+x} ]; then export SAMPLE_PATH='samples/basic'; fi
+if [ -z ${ARTIFACTS_PATH+x} ]; then export ARTIFACTS_PATH="$(realpath ~/ncp_build_artifacts)"; fi
+

@@ -1,0 +1,27 @@
+#!/bin/env bash
+
+utils_dir="$(readlink -f $0 | xargs dirname)/../utils"
+board_dir="$(readlink -f $0 | xargs dirname)/../boards/${BOARD}"
+
+ver_before=${utils_dir}/get_ver
+v="$((RANDOM % 128)).$((RANDOM % 128)).$((RANDOM % 128))"
+echo "building version ${v}"
+${utils_dir}/set_src_ver ${v}
+
+cd ${PRJDIR}/${SAMPLE_PATH}
+./build.sh ${BOARD}
+cd - &>> /dev/null
+
+echo "building done"
+
+echo "flashing slot1"
+${board_dir}/flash_slot1 $(find ${PRJDIR}/${SAMPLE_PATH} -name 'zephyr.signed.confirmed.bin')
+echo "flashing done"
+
+${utils_dir}/wait_online 50 5 && ${utils_dir}/wait_mcu_ping 30 5
+if [ $(${utils_dir}/get_ver) != ${ver_before} ]
+then
+    exit 0
+else
+    exit 1
+fi

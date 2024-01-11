@@ -1,0 +1,6 @@
+#!/bin/env bash
+
+openocd=$(find ${ZEPHYR_BASE}/../../ -name openocd -type f | head -n 1)
+openocd_cfg=$(find ${ZEPHYR_BASE}/../../ -name st_nucleo_l4.cfg -type f | head -n 1)
+
+${openocd} -f ${openocd_cfg} -c 'init' -c "reset halt" -c 'stm32l4x mass_erase 0' -c 'exit reset'

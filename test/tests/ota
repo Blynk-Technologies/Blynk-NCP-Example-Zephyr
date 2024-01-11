@@ -1,0 +1,35 @@
+#!/bin/env bash
+
+utils_dir="$(readlink -f $0 | xargs dirname)/../utils"
+board_dir="$(readlink -f $0 | xargs dirname)/../boards/${BOARD}"
+
+ver_before=${utils_dir}/get_ver
+v="$((RANDOM % 128)).$((RANDOM % 128)).$((RANDOM % 128))"
+echo "building version ${v}"
+${utils_dir}/set_src_ver ${v}
+
+cd ${PRJDIR}/${SAMPLE_PATH}
+./build.sh ${BOARD}
+cd - &>> /dev/null
+
+echo "building done"
+
+d=$(dirname $(find ${PRJDIR}/${SAMPLE_PATH} -name 'zephyr.signed.bin'))
+f=$(find ${PRJDIR}/${SAMPLE_PATH} -name 'zephyr.signed.bin')
+
+echo "start server ${MY_IP}:${OTA_PORT}"
+python3 -m http.server --bind ${MY_IP} --directory ${d} ${OTA_PORT} &
+
+curl --get --silent --data "value=http://${MY_IP}:${OTA_PORT}/zephyr.signed.bin&s=0&value=$(stat --printf=%s ${f})&value=${BLYNK_TEMPLATE_ID}&value=version&value=buildtime" "https://${BLYNK_SERVER}/external/api/update?token=${BLYNK_AUTH_TOKEN}&pin=ota"
+
+${utils_dir}/wait_online 50 5 && ${utils_dir}/wait_mcu_ping 30 5
+pkill -f "python3 -m http.server --bind ${MY_IP} --directory ${d} ${OTA_PORT}"
+echo "stop server ${MY_IP}:${OTA_PORT}"
+
+sleep 5
+if [ $(${utils_dir}/get_ver) != ${ver_before} ]
+then
+    exit 0
+else
+    exit 1
+fi
