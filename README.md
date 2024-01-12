@@ -69,8 +69,8 @@ We have prepared a set of step-by-step tutorials for each use case:
 - [WeAct Black Pill F411CE + Witty Cloud](docs/samples/basic/WeAct_Black_Pill_with_Witty_Cloud.md)
 - [Adafruit Feather STM32F405 + AirLift FeatherWing](docs/samples/basic/Adafruit_Feather_STM32F405_with_AirLift.md)
 - [Raspberry Pi Pico + Pico-ESP8266 Shield](docs/samples/basic/Raspberry_Pi_Pico_with_ESP8266_Shield.md)
-- [Arduino DUE + AirLift Shield](docs/samples/without_ota/Arduino_DUE_with_AirLift.md) *(without OTA)*
 - [Adafruit Feather M0 Basic + AirLift FeatherWing](docs/samples/without_ota/Adafruit_Feather_M0_Basic_with_AirLift.md) *(without OTA)*
+- [UNO R4 Minima + AirLift Shield](docs/samples/without_ota/Arduino_UNO_R4_Minima_with_AirLift.md) *(without OTA, Work-In-Progress)*
 
 ## Troubleshooting
 

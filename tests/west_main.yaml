@@ -1,0 +1,21 @@
+# Copyright (c) 2024 Blynk Technologies Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+manifest:
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: "main"
+      import:
+        name-allowlist:
+          - cmsis
+          - hal_stm32
+          - hal_rpi_pico
+          - hal_atmel
+          - mcuboot
+          - mbedtls
+
