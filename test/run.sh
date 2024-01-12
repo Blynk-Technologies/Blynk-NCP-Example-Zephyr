@@ -102,10 +102,12 @@ echo '===========================================================' | tee -api ${
 if [ -z ${test_fail+x} ]
 then
     echo '===============ALL TESTS ARE OK============================' | tee -api ${TMPDIR}/build.log
+    rc=0
 else
-    echo '================SOME TESTS ARE FAIL========================' | tee -api ${TMPDIR}/build.log
+    echo '===============SOME TESTS ARE FAIL=========================' | tee -api ${TMPDIR}/build.log
+    rc=1
 fi
 echo "===============TOOK $((end_time-start_time)) SECONDS============================" | tee -api ${TMPDIR}/build.log
 echo '===========================================================' | tee -api ${TMPDIR}/build.log
 
-exit 0
+exit ${rc}
