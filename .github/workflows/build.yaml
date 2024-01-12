@@ -31,7 +31,7 @@ jobs:
         with:
           submodules: 'true'
       - name: Setup Zephyr
-        uses: khrystynaO/zephyr-setup@khrystynaO/feature/manifest-file
+        uses: khrystynaO/zephyr-setup@main
         with:
           manifest-file: tests/west_${{ matrix.zephyr_ver }}.yaml
           toolchains: ${{ matrix.sample.toolchains }}

@@ -17,3 +17,4 @@ manifest:
           - hal_rpi_pico
           - hal_atmel
           - mcuboot
+          - mbedtls
