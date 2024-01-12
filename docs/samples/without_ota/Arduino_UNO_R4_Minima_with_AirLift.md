@@ -1,7 +1,7 @@
 
-# Arduino DUE + AirLift Shield
+# Arduino UNO R4 Minima + AirLift Shield
 
-![main board](../../images/Arduino-Due.png)
+![main board](../../images/Arduino-UNO-R4-Minima.png)
 
 > [!CAUTION]
 > 🚧 This sample is **Work-In-Progress** and is not fully functional yet. 🚧
@@ -14,10 +14,9 @@
 
 Hardware:
 
-- Arduino DUE (SAM3X8E)
+- Arduino UNO R4 Minima (Renesas RA4M1)
 - Adafruit AirLift Shield (ESP32) to act as a **Network Co-Processor**
-- USB to TTL Serial (3.3v) adapter or cable
-- Micro-USB cable
+- USB Type C cable
 
 Software:
 
@@ -44,7 +43,7 @@ Build:
 
 ```sh
 export ZEPHYR_BASE=~/zephyrproject/zephyr
-./build.sh arduino_due
+./build.sh arduino_uno_r4_minima
 ```
 
 <details><summary><b>Expected output</b></summary>
@@ -52,20 +51,18 @@ export ZEPHYR_BASE=~/zephyrproject/zephyr
 ```log
 ...
 ...
-[138/139] Linking C executable zephyr/zephyr.elf
+[123/124] Linking C executable zephyr/zephyr.elf
 Memory region         Used Size  Region Size  %age Used
-           FLASH:       33704 B       512 KB      6.43%
-             RAM:       16896 B        96 KB     17.19%
+           FLASH:       29708 B       240 KB     12.09%
+             RAM:       16744 B        32 KB     51.10%
         IDT_LIST:          0 GB         2 KB      0.00%
-Generating files from build/zephyr/zephyr.elf for board: arduino_due
-[139/139] cd ....../build/zephyr/zephyr.elf
+Generating files from build/zephyr/zephyr.elf for board: arduino_uno_r4_minima
+[124/124] cd ....../build/zephyr/zephyr.elf
 ```
 
 </details>
 
 ## Flash the board
-
-TODO
 
 ```sh
 west flash
@@ -81,27 +78,8 @@ west flash
 > When assembling the board, ensure that all USB ports are disconnected from any components, and that there is no power supply connected.
 
 1. Insert AirLift Shield into the Arduino board.
-2. Connect USB to TTL Serial adapter to the Arduino:
-
-    | Arduino   | TTL adapter
-    | :---      | :---
-    | GND       | GND
-    | PA11(TX)  | RX
-    | PA10(RX)  | TX
-
-3. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console (`115200 8N1`).
-4. The expected serial monitor output looks like this:
-
-    ```log
-    *** Booting Zephyr OS build zephyr-v3.5.0-3889-ge49d174be910 ***
-    [00:00:03.002,000] <inf> blynk_example: Blynk.NCP host example
-    [00:00:03.002,000] <inf> blynk_example: Firmware version: 0.0.1
-    [00:00:03.854,000] <inf> blynk_ncp: Blynk.NCP ready br 38400
-    [00:00:03.854,000] <inf> blynk_ncp: setting target br 115200
-    [00:00:03.883,000] <inf> blynk_ncp: Blynk.NCP ready br 115200
-    [00:00:03.886,000] <inf> blynk_ncp: NCP firmware: 0.6.3
-    [00:00:03.903,000] <inf> blynk_ncp: NCP state changed [Not Initialized] => [Configuration]
-    ```
+2. Connect your board using the USB cable.
+3. AirLift Shield should be blinking Blue LED, indicating that the board is in `Configuration` mode.
 
 ## Use the Blynk iOS/Android app to configure your new device
 
