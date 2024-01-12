@@ -60,7 +60,7 @@ In general, getting started with Blynk.NCP on Zephyr will consist of:
 1. Setting up Zephyr and dev environment
 2. Uploading Blynk.NCP firmware to your NCP module
 3. Assembling the board
-4. Bulding and flashing the sample firmware
+4. Building and flashing the sample firmware
 5. Using Blynk iOS/Android app to add your device to the Blynk Cloud
 
 We have prepared a set of step-by-step tutorials for each use case:
@@ -70,7 +70,7 @@ We have prepared a set of step-by-step tutorials for each use case:
 - [Adafruit Feather STM32F405 + AirLift FeatherWing](docs/samples/basic/Adafruit_Feather_STM32F405_with_AirLift.md)
 - [Raspberry Pi Pico + Pico-ESP8266 Shield](docs/samples/basic/Raspberry_Pi_Pico_with_ESP8266_Shield.md)
 - [Adafruit Feather M0 Basic + AirLift FeatherWing](docs/samples/without_ota/Adafruit_Feather_M0_Basic_with_AirLift.md) *(without OTA)*
-- [UNO R4 Minima + AirLift Shield](docs/samples/without_ota/Arduino_UNO_R4_Minima_with_AirLift.md) *(without OTA, Work-In-Progress)*
+- [Arduino UNO R4 Minima + AirLift Shield](docs/samples/without_ota/Arduino_UNO_R4_Minima_with_AirLift.md) *(without OTA, Work-In-Progress)*
 
 ## Troubleshooting
 
