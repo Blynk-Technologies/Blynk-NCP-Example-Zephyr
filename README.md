@@ -1,9 +1,9 @@
 
 # Blynk.NCP
 
-[![Issues](https://img.shields.io/github/issues/Blynk-Technologies/BlynkNcpExample_Zephyr_Zephyr.svg)](https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr/issues)
+[![Issues](https://img.shields.io/github/issues/Blynk-Technologies/BlynkNcpExample_Zephyr.svg)](https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr/issues)
 [![Downloads](https://img.shields.io/github/downloads/Blynk-Technologies/BlynkNcpDriver/total)](https://github.com/Blynk-Technologies/BlynkNcpDriver/releases/latest)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/Blynk-Technologies/BlynkNcpExample_Zephyr/build.yml?branch=main&logo=github&label=tests)](https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr/actions)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/Blynk-Technologies/BlynkNcpExample_Zephyr/build.yaml?branch=main&logo=github&label=tests)](https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr/actions)
 [![License](https://img.shields.io/github/license/Blynk-Technologies/BlynkNcpExample_Zephyr?color=blue)](LICENSE)
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
