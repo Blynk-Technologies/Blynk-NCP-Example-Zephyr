@@ -16,7 +16,7 @@
 
 LOG_MODULE_REGISTER(blynk_example, CONFIG_LOG_DEFAULT_LEVEL);
 
-void periodic_timer_work_handler(struct k_work *work)
+static void periodic_timer_work_handler(struct k_work *work)
 {
     const uint32_t value = k_uptime_get_32();
     LOG_INF("Sending %u to Virtual Pin 1", value);
@@ -29,7 +29,7 @@ void periodic_timer_work_handler(struct k_work *work)
 
 K_WORK_DEFINE(periodic_timer_work, periodic_timer_work_handler);
 
-void periodic_timer_handler(struct k_timer*)
+static void periodic_timer_handler(struct k_timer*)
 {
     k_work_submit(&periodic_timer_work);
 }
@@ -44,9 +44,10 @@ int main(void)
 #endif
 
     LOG_INF("Blynk.NCP host example on %s", CONFIG_BOARD);
+    LOG_INF("Firmware version: %s", CONFIG_BLYNK_FIRMWARE_VERSION);
 
     // Initialize Blynk.NCP
-    if (blynk_ncp_init())
+    if (0 != blynk_ncp_init())
     {
         LOG_ERR("Can't initialize Blynk.NCP");
         return 1;

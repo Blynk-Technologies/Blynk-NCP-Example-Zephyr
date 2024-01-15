@@ -12,7 +12,7 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/ring_buffer.h>
 
-#include "BlynkRpc.h"
+#include <blynk_ncp/blynk_ncp.h>
 
 LOG_MODULE_DECLARE(blynk_ncp);
 
