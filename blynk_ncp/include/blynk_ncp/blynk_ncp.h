@@ -17,6 +17,10 @@ extern "C" {
 #include "idl/rpc_shim_blynk.h"
 #include "BlynkRpcUartFraming.h"
 
+typedef void (*blynk_ncp_state_update_callback_t)(RpcBlynkState);
+void blynk_ncp_register_callback(blynk_ncp_state_update_callback_t cb);
+RpcBlynkState blynk_ncp_get_state(void);
+
 int blynk_ncp_init(void);
 
 
