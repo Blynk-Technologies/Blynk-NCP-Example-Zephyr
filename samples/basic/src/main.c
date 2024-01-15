@@ -59,6 +59,11 @@ int main(void)
         return 1;
     }
 
+    while(BLYNK_STATE_NOT_INITIALIZED == blynk_ncp_get_state())
+    {
+        k_msleep(20);
+    }
+
     // Set the configuration mode timeout to 30 minutes (for demo purposes)
     rpc_blynk_setConfigTimeout(30*60);
 

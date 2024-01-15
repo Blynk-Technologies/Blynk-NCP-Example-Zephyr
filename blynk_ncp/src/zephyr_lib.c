@@ -28,7 +28,7 @@ LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_LOG_LVL);
 
 #ifndef BLYNK_THERAD_STACK_SIZE
 #warning BLYNK_THERAD_STACK_SIZE not configured
-#define BLYNK_THERAD_STACK_SIZE          (512)
+#define BLYNK_THERAD_STACK_SIZE          (1024)
 #endif
 
 BUILD_ASSERT(1 != sizeof(CONFIG_BLYNK_TEMPLATE_ID),         "BLYNK_TEMPLATE_ID is required");
@@ -61,6 +61,8 @@ K_MUTEX_DEFINE(ncp_rpc_mutex);
 void ncp_uart_init(void);          // see zephyr_uart.c
 int ncp_uart_set_br(uint32_t br);  // see zephyr_uart.c
 void ncp_ota_run(void);            // see zephyr_ota.c
+
+static void ncpPingHandler(struct k_work *work);
 
 void ncpMutexLock(void)
 {
@@ -131,8 +133,84 @@ static bool ncpSetupSerial(uint32_t timeout)
     return false;
 }
 
-void ncpThread(void*, void*, void*)
+K_WORK_DEFINE(ncpPingtWork, ncpPingHandler);
+
+void ncpPingTimerHandler(struct k_timer *dummy)
 {
+    //timer called from system ISR so use work queue here to ping NCP later
+    k_work_submit(&ncpPingtWork);
+}
+
+K_TIMER_DEFINE(ncpPingTimer, ncpPingTimerHandler, NULL);
+
+static void ncpThread(void*, void*, void*)
+{
+    LOG_INF("NCP init");
+#if DT_HAS_CHOSEN(blynk_ncp_status_led)
+    gpio_pin_configure_dt(&staus_led, GPIO_OUTPUT_INACTIVE);
+#endif
+#if DT_HAS_CHOSEN(blynk_ncp_rst)
+    gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
+    k_msleep(10);
+#endif
+
+    if (!ncpSetupSerial(5000))
+    {
+        LOG_ERR("can't setup serial");
+        return;
+    }
+
+    const char* ncpFwVer = "unknown";
+    if (!rpc_blynk_getNcpVersion(&ncpFwVer))
+    {
+        LOG_ERR("can't get NCP firmware version");
+        return;
+    }
+
+    LOG_INF("NCP firmware: %s", ncpFwVer);
+
+    rpc_blynk_setFirmwareInfo(CONFIG_BLYNK_FIRMWARE_TYPE,
+                              CONFIG_BLYNK_FIRMWARE_VERSION,
+                              BLYNK_FIRMWARE_BUILD_TIME,
+                              BLYNK_RPC_LIB_VERSION);
+
+    if (!rpc_blynk_initialize(CONFIG_BLYNK_TEMPLATE_ID, CONFIG_BLYNK_TEMPLATE_NAME))
+    {
+        LOG_ERR("rpc_blynk_initialize failed");
+        return;
+    }
+    k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(5));
+
+#if defined(CONFIG_BLYNK_VENDOR_PREFIX)
+    if (1 != sizeof(CONFIG_BLYNK_VENDOR_PREFIX)) {
+        rpc_blynk_setVendorPrefix(CONFIG_BLYNK_VENDOR_PREFIX);
+    }
+#endif
+#if defined(CONFIG_BLYNK_VENDOR_SERVER)
+    if (1 != sizeof(CONFIG_BLYNK_VENDOR_SERVER)) {
+        rpc_blynk_setVendorServer(CONFIG_BLYNK_VENDOR_SERVER);
+    }
+#endif
+
+#if defined(CONFIG_BLYNK_NCP_ONBOARD_RGB_LED)
+    rpc_hw_initRGB(CONFIG_BLYNK_NCP_ONBOARD_RGB_R_GPIO_NUM,
+                   CONFIG_BLYNK_NCP_ONBOARD_RGB_G_GPIO_NUM,
+                   CONFIG_BLYNK_NCP_ONBOARD_RGB_B_GPIO_NUM,
+                   CONFIG_BLYNK_NCP_ONBOARD_LED_COM_ANODE);
+    rpc_hw_setLedBrightness(CONFIG_BLYNK_NCP_ONBOARD_LED_BRIGHT);
+#endif
+
+#if defined(CONFIG_BLYNK_NCP_ONBOARD_LED)
+    rpc_hw_initLED(CONFIG_BLYNK_NCP_ONBOARD_LED_GPIO_NUM,
+                   CONFIG_BLYNK_NCP_ONBOARD_LED_COM_ANODE);
+    rpc_hw_setLedBrightness(CONFIG_BLYNK_NCP_ONBOARD_LED_BRIGHT);
+#endif
+
+#if defined(CONFIG_BLYNK_NCP_ONBOARD_BTN)
+    rpc_hw_initUserButton(CONFIG_BLYNK_NCP_ONBOARD_BTN_GPIO_NUM,
+                          CONFIG_BLYNK_NCP_ONBOARD_BTN_INVERSION);
+#endif
+
     while(1)
     {
         rpc_run();
@@ -206,16 +284,6 @@ static void ncpPingHandler(struct k_work *work)
         err_num = 0;
     }
 }
-
-K_WORK_DEFINE(ncpPingtWork, ncpPingHandler);
-
-void ncpPingTimerHandler(struct k_timer *dummy)
-{
-    //timer called from system ISR so use work queue here to ping NCP later
-    k_work_submit(&ncpPingtWork);
-}
-
-K_TIMER_DEFINE(ncpPingTimer, ncpPingTimerHandler, NULL);
 
 static const char* ncpGetStateString(uint8_t state)
 {
@@ -320,99 +388,35 @@ void rpc_client_processEvent_impl(uint8_t event)
 
 int blynk_ncp_init(void)
 {
-    ncp_state = BLYNK_STATE_NOT_INITIALIZED;
-
-    k_timer_stop(&ncpReinitTimer);
-    k_timer_stop(&ncpPingTimer);
-
-#if DT_HAS_CHOSEN(blynk_ncp_status_led)
-    gpio_pin_configure_dt(&staus_led, GPIO_OUTPUT_INACTIVE);
-#endif
-#if DT_HAS_CHOSEN(blynk_ncp_rst)
-    gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
-    k_msleep(10);
-#endif
-
-    if (!ncpSetupSerial(5000))
-    {
-        LOG_ERR("can't setup serial");
-        return -1;
-    }
-
-    const char* ncpFwVer = "unknown";
-    if (!rpc_blynk_getNcpVersion(&ncpFwVer))
-    {
-        LOG_ERR("can't get NCP firmware version");
-        return -1;
-    }
-
-    LOG_INF("NCP firmware: %s", ncpFwVer);
-
+    static int init = 0;
     /*
      * Embed the info tag into the MCU firmware binary
      * This structure is used to identify the firmware type
      * and version during the OTA upgrade
      */
     volatile const char firmwareTag[] = "blnkinf\0"
-        BLYNK_PARAM_KV("mcu"    , CONFIG_BLYNK_FIRMWARE_VERSION)       // Primary MCU: firmware version
-        BLYNK_PARAM_KV("fw-type", CONFIG_BLYNK_TEMPLATE_ID)            // Firmware type (usually same as Template ID)
-        BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)               // Firmware build date and time
-        BLYNK_PARAM_KV("blynk"  , BLYNK_RPC_LIB_VERSION)               // Version of the NCP driver library
-        "\0";
+    BLYNK_PARAM_KV("mcu"    , CONFIG_BLYNK_FIRMWARE_VERSION)       // Primary MCU: firmware version
+    BLYNK_PARAM_KV("fw-type", CONFIG_BLYNK_TEMPLATE_ID)            // Firmware type (usually same as Template ID)
+    BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)               // Firmware build date and time
+    BLYNK_PARAM_KV("blynk"  , BLYNK_RPC_LIB_VERSION)               // Version of the NCP driver library
+    "\0";
     (void)firmwareTag;
 
-    //LOG_HEXDUMP_INF((void*)firmwareTag, sizeof(firmwareTag), "firmwareTag is:");
-
-
-    rpc_blynk_setFirmwareInfo(CONFIG_BLYNK_FIRMWARE_TYPE,
-                              CONFIG_BLYNK_FIRMWARE_VERSION,
-                              BLYNK_FIRMWARE_BUILD_TIME,
-                              BLYNK_RPC_LIB_VERSION);
-
-#if defined(CONFIG_BLYNK_VENDOR_PREFIX)
-    if (1 != sizeof(CONFIG_BLYNK_VENDOR_PREFIX)) {
-        rpc_blynk_setVendorPrefix(CONFIG_BLYNK_VENDOR_PREFIX);
-    }
-#endif
-#if defined(CONFIG_BLYNK_VENDOR_SERVER)
-    if (1 != sizeof(CONFIG_BLYNK_VENDOR_SERVER)) {
-        rpc_blynk_setVendorServer(CONFIG_BLYNK_VENDOR_SERVER);
-    }
-#endif
-
-#if defined(CONFIG_BLYNK_NCP_ONBOARD_RGB_LED)
-    rpc_hw_initRGB(CONFIG_BLYNK_NCP_ONBOARD_RGB_R_GPIO_NUM,
-                   CONFIG_BLYNK_NCP_ONBOARD_RGB_G_GPIO_NUM,
-                   CONFIG_BLYNK_NCP_ONBOARD_RGB_B_GPIO_NUM,
-                   CONFIG_BLYNK_NCP_ONBOARD_LED_COM_ANODE);
-    rpc_hw_setLedBrightness(CONFIG_BLYNK_NCP_ONBOARD_LED_BRIGHT);
-#endif
-
-#if defined(CONFIG_BLYNK_NCP_ONBOARD_LED)
-    rpc_hw_initLED(CONFIG_BLYNK_NCP_ONBOARD_LED_GPIO_NUM,
-                   CONFIG_BLYNK_NCP_ONBOARD_LED_COM_ANODE);
-    rpc_hw_setLedBrightness(CONFIG_BLYNK_NCP_ONBOARD_LED_BRIGHT);
-#endif
-
-#if defined(CONFIG_BLYNK_NCP_ONBOARD_BTN)
-    rpc_hw_initUserButton(CONFIG_BLYNK_NCP_ONBOARD_BTN_GPIO_NUM,
-                            CONFIG_BLYNK_NCP_ONBOARD_BTN_INVERSION);
-#endif
-
-    if (!rpc_blynk_initialize(CONFIG_BLYNK_TEMPLATE_ID, CONFIG_BLYNK_TEMPLATE_NAME))
+    k_timer_stop(&ncpReinitTimer);
+    k_timer_stop(&ncpPingTimer);
+    if(init)
     {
-        LOG_ERR("rpc_blynk_initialize failed");
-        return -1;
+        k_thread_abort(ncp_tid);
     }
+
 
     ncp_tid = k_thread_create(&ncp_thread_data, ncp_stack_area,
-                                K_THREAD_STACK_SIZEOF(ncp_stack_area),
-                                ncpThread,
-                                NULL, NULL, NULL,
-                                BLYNK_THREAD_PRIO, 0, K_NO_WAIT);
+                              K_THREAD_STACK_SIZEOF(ncp_stack_area),
+                              ncpThread,
+                              NULL, NULL, NULL,
+                              BLYNK_THREAD_PRIO, 0, K_NO_WAIT);
 
-    k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(5));
-
+    init = 1;
     return 0;
 }
 
