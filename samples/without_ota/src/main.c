@@ -46,7 +46,19 @@ int main(void)
     LOG_INF("Blynk.NCP host example on %s", CONFIG_BOARD);
 
     // Initialize Blynk.NCP
-    blynk_ncp_init();
+    if (blynk_ncp_init())
+    {
+        LOG_ERR("Can't initialize Blynk.NCP");
+        return 1;
+    }
+
+    while(BLYNK_STATE_NOT_INITIALIZED == blynk_ncp_get_state())
+    {
+        k_msleep(20);
+    }
+
+    // Set the configuration mode timeout to 30 minutes (for demo purposes)
+    rpc_blynk_setConfigTimeout(30*60);
 
     // Start a periodic timer
     k_timer_start(&periodic_timer, K_SECONDS(10), K_SECONDS(10));
