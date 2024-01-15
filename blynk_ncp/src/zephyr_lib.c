@@ -52,6 +52,7 @@ static k_tid_t ncp_tid;
 
 static uint8_t ncp_state = BLYNK_STATE_NOT_INITIALIZED;
 static blynk_ncp_state_update_callback_t state_update_callback = NULL;
+static blynk_ncp_event_callback_t event_callback = NULL;
 
 #define BLYNK_PARAM_KV(k, v)    k "\0" v "\0"
 
@@ -310,10 +311,17 @@ void rpc_client_processEvent_impl(uint8_t event)
             LOG_INF("NCP: unknown event [%hhu]. doing nothing",event);
             break;
     }
+
+    if(event_callback)
+    {
+        event_callback((RpcEvent)event);
+    }
 }
 
 int blynk_ncp_init(void)
 {
+    ncp_state = BLYNK_STATE_NOT_INITIALIZED;
+
     k_timer_stop(&ncpReinitTimer);
     k_timer_stop(&ncpPingTimer);
 
@@ -408,9 +416,14 @@ int blynk_ncp_init(void)
     return 0;
 }
 
-void blynk_ncp_register_callback(blynk_ncp_state_update_callback_t cb)
+void blynk_ncp_register_state_update_callback(blynk_ncp_state_update_callback_t cb)
 {
     state_update_callback = cb;
+}
+
+void blynk_ncp_register_event_callback(blynk_ncp_event_callback_t cb)
+{
+    event_callback = cb;
 }
 
 RpcBlynkState blynk_ncp_get_state(void)
