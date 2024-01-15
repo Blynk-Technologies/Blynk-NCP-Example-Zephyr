@@ -50,6 +50,9 @@ K_THREAD_STACK_DEFINE(ncp_stack_area, BLYNK_THERAD_STACK_SIZE);
 static struct k_thread ncp_thread_data;
 static k_tid_t ncp_tid;
 
+static uint8_t ncp_state = BLYNK_STATE_NOT_INITIALIZED;
+static blynk_ncp_state_update_callback_t state_update_callback = NULL;
+
 #define BLYNK_PARAM_KV(k, v)    k "\0" v "\0"
 
 K_MUTEX_DEFINE(ncp_rpc_mutex);
@@ -233,15 +236,14 @@ static const char* ncpGetStateString(uint8_t state)
 
 void rpc_client_blynkStateChange_impl(uint8_t state)
 {
-    static uint8_t prv = BLYNK_STATE_NOT_INITIALIZED;
-    if(prv == state)
+    if(ncp_state == state)
     {
         // nothing changed
         return;
     }
 
-    LOG_INF("NCP state changed [%s] => [%s]", ncpGetStateString(prv), ncpGetStateString(state));
-    prv = state;
+    LOG_INF("NCP state changed [%s] => [%s]", ncpGetStateString(ncp_state), ncpGetStateString(state));
+    ncp_state = state;
     switch(state)
     {
         case BLYNK_STATE_NOT_INITIALIZED:
@@ -250,6 +252,11 @@ void rpc_client_blynkStateChange_impl(uint8_t state)
             break;
         default:
             break;
+    }
+
+    if(state_update_callback)
+    {
+        state_update_callback(state);
     }
 }
 
@@ -399,4 +406,14 @@ int blynk_ncp_init(void)
     k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(5));
 
     return 0;
+}
+
+void blynk_ncp_register_callback(blynk_ncp_state_update_callback_t cb)
+{
+    state_update_callback = cb;
+}
+
+RpcBlynkState blynk_ncp_get_state(void)
+{
+    return ncp_state;
 }
