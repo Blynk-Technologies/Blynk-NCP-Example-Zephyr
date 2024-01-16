@@ -127,4 +127,12 @@ config BLYNK_LOG_LVL
     int "logging level"
     default LOG_DEFAULT_LEVEL
 
+config BLYNK_THREAD_PRIO
+    int "Blynk thread proirty"
+    default MAIN_THREAD_PRIORITY
+
+config BLYNK_THERAD_STACK_SIZE
+    int "Blynk thread stack size"
+    default 1024
+
 endmenu
