@@ -12,6 +12,8 @@
 #include <zephyr/device.h>
 #include <zephyr/logging/log.h>
 
+#include <soc.h>
+
 #include <blynk_ncp/blynk_ncp.h>
 
 LOG_MODULE_REGISTER(blynk_example, CONFIG_LOG_DEFAULT_LEVEL);
@@ -65,6 +67,13 @@ int main(void)
     LOG_INF("Blynk.NCP host example on %s", CONFIG_BOARD);
     LOG_INF("Firmware version: %s", CONFIG_BLYNK_FIRMWARE_VERSION);
 
+    if (!strcmp(CONFIG_BOARD, "arduino_uno_r4_minima"))
+    {
+        /* enable internal LDO */
+        /* 0x400900cc expected to be USBMC reg */
+        *(uint16_t*)0x400900cc &= ~(1<<0); // VDDUSBE
+        *(uint16_t*)0x400900cc |= (1<<7); // VDCEN
+    }
     // Initialize Blynk.NCP
     if (0 != blynk_ncp_init())
     {

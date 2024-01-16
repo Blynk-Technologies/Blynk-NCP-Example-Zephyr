@@ -10,6 +10,11 @@
 > This board is currently not supported by MCUboot on Zephyr,
 > so OTA firmware updates using **Blynk.Air** won't work out of the box.
 
+> [!NOTE]
+> To be able to flash firmware via onboard USB port
+> you should use dfu-util shipped with arduino
+> details here: https://github.com/zephyrproject-rtos/zephyr/discussions/64813
+
 ## Prerequisites
 
 Hardware:
@@ -22,6 +27,7 @@ Software:
 
 - Latest official [Zephyr sources and SDK][zephyr_sdk]
 - Blynk.NCP [firmware binary][blynk_ncp_binary] (more on that later)
+- pyocd support [package](https://docs.zephyrproject.org/latest/boards/arm/arduino_uno_r4/doc/index.html)
 
 ## Configure and build the sample project
 
@@ -65,7 +71,7 @@ Generating files from build/zephyr/zephyr.elf for board: arduino_uno_r4_minima
 ## Flash the board
 
 ```sh
-west flash
+/home/arduino15/packages/arduino/tools/dfu-util/0.11.0-arduino5/dfu-util --device 0x2341:0x0069,:0x0369 -D "build/zephyr/zephyr.bin" -a0 -Q
 ```
 
 ## Flash the Network Co-Processor
@@ -95,6 +101,7 @@ Open the `Blynk App` -> click `Add New Device` -> select `Find Devices Nearby`
 ## Troubleshooting
 
 Check out the [troubleshooting guide](../../Troubleshooting.md)
+in case of troubles with flashing check [this](https://github.com/zephyrproject-rtos/zephyr/discussions/64813)
 
 ## Disclaimer
 

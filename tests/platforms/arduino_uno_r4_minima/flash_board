@@ -1,0 +1,13 @@
+#!/bin/env bash
+
+if [ -z ${PRJDIR+x} ]; then PRJDIR=${PWD}; fi
+
+if [ -z ${DFU_UTIL+x} ]
+then
+    echo 'arduino\''s DFU_UTIL must be specified'
+    exit 1
+fi
+
+${DFU_UTIL} -device 0x2341:0x0069,:0x0369 -D "${PRJDIR}/${SAMPLE_PATH}/build/zephyr/zephyr.bin" -a0 -Q
+
+exit ${?}
