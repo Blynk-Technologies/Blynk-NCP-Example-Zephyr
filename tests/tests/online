@@ -1,7 +1,6 @@
 #!/bin/env bash
 
 utils_dir="$(readlink -f $0 | xargs dirname)/../utils"
-board_dir="$(readlink -f $0 | xargs dirname)/../boards/${BOARD}"
 
 if [ -z ${PRJDIR+x} ]; then PRJDIR=${PWD}; fi
 
@@ -16,7 +15,7 @@ cd - &>> /dev/null
 echo "building done"
 
 echo "flash board"
-${board_dir}/flash_board
+${PLATFORM_DIR}/flash_board
 echo "flash done"
 
 if ${utils_dir}/wait_online 50 5 && ${utils_dir}/wait_mcu_ping 10 5

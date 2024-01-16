@@ -8,7 +8,7 @@ set -e
 function cleanup {
     #collect build artifacts
     mv ${TMPDIR}/build.log ${PRJDIR}/${SAMPLE_PATH}/build/ &>> /dev/null
-    tarname=build_${BOARD}_${SRC_VERSION}_[$(date -u +%s)].tar.gz
+    tarname=build_${TEST_PLATFORM}_${SRC_VERSION}_[$(date -u +%s)].tar.gz
     mkdir -p ${ARTIFACTS_PATH} &>> /dev/null
     cd ${PRJDIR}/${SAMPLE_PATH} &>> /dev/null
     tar -pczf ${ARTIFACTS_PATH}/${tarname} build/ &>> /dev/null
@@ -27,16 +27,19 @@ script_dir=$(readlink -f $0 | xargs dirname)
 export script_name=$(readlink -f $0 | xargs basename)
 
 if [ "$#" -ne 1 ]; then
-    echo "syntax: ${script_name} <board>"
+    echo "syntax: ${script_name} <platform>"
     echo ""
-    echo "available boards:"
-    cd ${script_dir}/boards/
+    echo "available platforms:"
+    cd ${script_dir}/platforms/
     ls -d */ | sed 's|/||g'
     cd - &>> /dev/null
     exit 0
 fi
 
-export BOARD=${1}
+TEST_PLATFORM=${1}
+export PLATFORM_DIR=${script_dir}/platforms/${TEST_PLATFORM}
+source ${PLATFORM_DIR}/brd.config
+
 
 #configuration
 if [ -z ${CONF_FILE+x} ]
@@ -83,7 +86,7 @@ SRC_VERSION=$(cat ${PRJDIR}/${SAMPLE_PATH}/prj.conf | grep CONFIG_MCUBOOT_IMGTOO
 echo "fw ver: ${SRC_VERSION}"
 echo ""
 
-tests=($(${script_dir}/boards/${BOARD}/supported_tests))
+tests=($(${PLATFORM_DIR}/supported_tests))
 
 for test in ${tests[@]}
 do
