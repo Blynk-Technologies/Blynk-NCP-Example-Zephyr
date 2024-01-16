@@ -4,4 +4,5 @@ if [ -z ${OTA_PORT+x} ]; then export OTA_PORT=$((50000 + RANDOM % 10000)); fi
 if [ -z ${ZEPHYR_BASE+x} ]; then export ZEPHYR_BASE="$(realpath ~/zephyrproject/zephyr)"; fi
 if [ -z ${SAMPLE_PATH+x} ]; then export SAMPLE_PATH='samples/basic'; fi
 if [ -z ${ARTIFACTS_PATH+x} ]; then export ARTIFACTS_PATH="$(realpath ~/ncp_build_artifacts)"; fi
+if [ -z ${BRANCH_NAME+x} ]; then export BRANCH_NAME="main"; fi
 

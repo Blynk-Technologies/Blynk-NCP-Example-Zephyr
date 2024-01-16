@@ -65,7 +65,7 @@ echo "start time [UTC] is ${start_time}" | tee -api ${TMPDIR}/build.log
 #clone
 echo "clone repo" | tee -api ${TMPDIR}/build.log
 cd ${TMPDIR}
-git clone git@github.com:Blynk-Technologies/BlynkNcpExample_Zephyr.git &>> ${TMPDIR}/build.log
+git clone git@github.com:Blynk-Technologies/BlynkNcpExample_Zephyr.git --branch ${BRANCH_NAME} &>> ${TMPDIR}/build.log
 cd BlynkNcpExample_Zephyr
 git submodule update --init --recursive &>> ${TMPDIR}/build.log
 echo "clone repo done" | tee -api ${TMPDIR}/build.log
