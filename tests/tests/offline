@@ -1,10 +1,9 @@
 #!/bin/env bash
 
 utils_dir="$(readlink -f $0 | xargs dirname)/../utils/"
-board_dir="$(readlink -f $0 | xargs dirname)/../boards/${BOARD}/"
 
 echo 'perform mass erase'
-${board_dir}/mass_erase
+${PLATFORM_DIR}/mass_erase
 echo 'mass erase done'
 if ${utils_dir}/mcu_ping
 then
