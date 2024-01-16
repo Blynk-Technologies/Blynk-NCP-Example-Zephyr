@@ -2,6 +2,7 @@
 
 r=$((RANDOM % 1024))
 curl -s https://${BLYNK_SERVER}/external/api/update?token=${BLYNK_AUTH_TOKEN}\&v0=${r}
+sleep 3
 if [ "$(curl -s https://${BLYNK_SERVER}/external/api/get?token=${BLYNK_AUTH_TOKEN}\&v1)" = "${r}" ]
 then
    exit 0

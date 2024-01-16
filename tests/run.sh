@@ -5,8 +5,11 @@
 # SPDX-License-Identifier: Apache-2.0
 set -e
 
+rc=1
+
 function cleanup {
     #collect build artifacts
+    mkdir -p ${PRJDIR}/${SAMPLE_PATH}/build/
     mv ${TMPDIR}/build.log ${PRJDIR}/${SAMPLE_PATH}/build/ &>> /dev/null
     tarname=build_${TEST_PLATFORM}_${SRC_VERSION}_[$(date -u +%s)].tar.gz
     mkdir -p ${ARTIFACTS_PATH} &>> /dev/null
@@ -17,7 +20,15 @@ function cleanup {
 
     # cleanup
     cd ${orig_path}
-    rm -rf ${TMPDIR}
+    if ${rc} == "0"
+    then
+        rm -rf ${TMPDIR}
+    else
+        echo ''
+        echo 'ERROR occured. keeping tmp dir for debug'
+        echo "TMPDIR=${TMPDIR}"
+        echo 'please remove it manually'
+    fi
 }
 
 trap cleanup EXIT
@@ -70,21 +81,30 @@ cd BlynkNcpExample_Zephyr
 git submodule update --init --recursive &>> ${TMPDIR}/build.log
 echo "clone repo done" | tee -api ${TMPDIR}/build.log
 
-echo "git commit:"
+echo "git commit:" | tee -api ${TMPDIR}/build.log
 git log --oneline -1 | tee -api ${TMPDIR}/build.log
-echo ""
+echo "" | tee -api ${TMPDIR}/build.log
 
-echo "git submodules:"
+echo "git submodules:" | tee -api ${TMPDIR}/build.log
 git submodule status | tee -api ${TMPDIR}/build.log
-echo ""
+echo "" | tee -api ${TMPDIR}/build.log
 
-echo "zephyr ver:"
+echo "zephyr ver:" | tee -api ${TMPDIR}/build.log
 cat ${ZEPHYR_BASE}/VERSION | tee -api ${TMPDIR}/build.log
-echo ""
+echo "" | tee -api ${TMPDIR}/build.log
 
-SRC_VERSION=$(cat ${PRJDIR}/${SAMPLE_PATH}/prj.conf | grep CONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION | sed 's|^.*=||' | sed 's|"||g')
-echo "fw ver: ${SRC_VERSION}"
-echo ""
+if cat ${PRJDIR}/${SAMPLE_PATH}/prj.conf | grep CONFIG_BLYNK_FIRMWARE_VERSION
+then
+    SRC_VERSION=$(cat ${PRJDIR}/${SAMPLE_PATH}/prj.conf | grep CONFIG_BLYNK_FIRMWARE_VERSION | sed 's|^.*=||' | sed 's|"||g')
+elif cat ${PRJDIR}/${SAMPLE_PATH}/prj.conf | grep CONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION
+then
+    SRC_VERSION=$(cat ${PRJDIR}/${SAMPLE_PATH}/prj.conf | grep CONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION | sed 's|^.*=||' | sed 's|"||g')
+else
+    echo "can't get version. exit" | tee -api ${TMPDIR}/build.log
+    exit 1
+fi
+echo "fw ver: ${SRC_VERSION}" | tee -api ${TMPDIR}/build.log
+echo "" | tee -api ${TMPDIR}/build.log
 
 tests=($(${PLATFORM_DIR}/supported_tests))
 
@@ -108,7 +128,6 @@ then
     rc=0
 else
     echo '===============SOME TESTS ARE FAIL=========================' | tee -api ${TMPDIR}/build.log
-    rc=1
 fi
 echo "===============TOOK $((end_time-start_time)) SECONDS============================" | tee -api ${TMPDIR}/build.log
 echo '===========================================================' | tee -api ${TMPDIR}/build.log

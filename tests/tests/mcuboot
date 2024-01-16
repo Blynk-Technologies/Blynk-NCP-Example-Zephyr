@@ -18,7 +18,7 @@ ${PLATFORM_DIR}/flash_slot1 $(find ${PRJDIR}/${SAMPLE_PATH} -name 'zephyr.signed
 echo "flashing done"
 
 ${utils_dir}/wait_online 50 5 && ${utils_dir}/wait_mcu_ping 30 5
-if [ $(${utils_dir}/get_ver) != ${ver_before} ]
+if [ $(${utils_dir}/get_ver) == ${v} ]
 then
     exit 0
 else
