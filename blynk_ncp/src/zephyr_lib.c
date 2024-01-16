@@ -169,7 +169,7 @@ static void ncpThread(void*, void*, void*)
         LOG_ERR("rpc_blynk_initialize failed");
         return;
     }
-    k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(5));
+    k_timer_start(&ncpPingTimer, K_SECONDS(10), K_SECONDS(CONFIG_BLYNK_NCP_PING_INTERVAL));
 
 #if defined(CONFIG_BLYNK_VENDOR_PREFIX)
     if (1 != sizeof(CONFIG_BLYNK_VENDOR_PREFIX)) {
@@ -245,7 +245,7 @@ static void ncpPingHandler(struct k_work *work)
     static int err_num = 0;
     if (RPC_STATUS_OK != rpc_ncp_ping())
     {
-        if(err_num < 3)
+        if(err_num <= CONFIG_BLYNK_NCP_ERR_PING_CNT)
         {
             err_num++;
             LOG_INF("NCP ping error. attempt [%d]", err_num);
