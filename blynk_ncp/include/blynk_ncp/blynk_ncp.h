@@ -4,13 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef BLYNK_LIB_H
-#define BLYNK_LIB_H
+#ifndef ZEPHYR_BLYNK_NCP_H
+#define ZEPHYR_BLYNK_NCP_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include "blynk_rpc_config.h"
 #include "BlynkRpc.h"
 #include "idl/rpc_shim_ncp.h"
 #include "idl/rpc_shim_hw.h"
@@ -39,4 +40,5 @@ extern int boot_set_pending_multi(int image_index, int permanent);
 }
 #endif
 
-#endif
+#endif /* ZEPHYR_BLYNK_NCP_H */
+

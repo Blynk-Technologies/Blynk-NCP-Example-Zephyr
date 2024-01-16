@@ -76,7 +76,7 @@ void ncpMutexUnlock(void)
 
 static bool ncpSetupSerial(uint32_t timeout)
 {
-    const uint32_t br[] = {1200, 2400, 4800, 9600, 19200, 28800, 38400, 57600, 76800, 115200, 230400, 460800, 576000, 921600, CONFIG_BLYNK_NCP_BAUD};
+    const uint32_t br[] = { 38400, 115200, CONFIG_BLYNK_NCP_BAUD, 9600, 19200, 28800, 57600, 76800, 230400, 460800, 921600 };
     int i = 0;
 
     ncp_uart_init();
@@ -347,7 +347,7 @@ void rpc_client_processEvent_impl(uint8_t event)
         case RPC_EVENT_BLYNK_TIME_SYNC:
             LOG_INF("NCP requests time sync from external time source");
             break;
-        case RPC_EVENT_BLYNK_TIME_CHANGED: break;
+        case RPC_EVENT_BLYNK_TIME_CHANGED:
             LOG_INF("NCP local time changed");
             break;
         /*
