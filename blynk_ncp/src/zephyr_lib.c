@@ -262,6 +262,12 @@ static void ncpPingHandler(struct k_work *work)
             gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
             k_msleep(100);
 #endif
+
+#if ! DT_HAS_CHOSEN(blynk_ncp_rst)
+            LOG_INF("NCP: softreboot");
+            rpc_ncp_reboot();
+            k_msleep(50);
+#endif
             k_timer_start(&ncpReinitTimer, K_SECONDS(1), K_NO_WAIT);
         }
     }
