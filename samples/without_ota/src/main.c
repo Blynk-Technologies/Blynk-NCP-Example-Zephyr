@@ -19,7 +19,7 @@ LOG_MODULE_REGISTER(blynk_example, CONFIG_LOG_DEFAULT_LEVEL);
 static void periodic_timer_work_handler(struct k_work *work)
 {
     const uint32_t value = k_uptime_get_32();
-    LOG_INF("Sending %u to Virtual Pin 2", value);
+    LOG_DBG("Sending %u to Virtual Pin 2", value);
 
     char buff[16];
     snprintf(buff, sizeof(buff), "%u", value);
