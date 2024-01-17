@@ -39,10 +39,6 @@ static struct {
     const struct flash_area *fa;
 } ota_info;
 
-#ifndef BLYNK_LOG
-#define BLYNK_LOG LOG_INF
-#endif
-
 //#define BLYNK_NCP_OTA_PREFETCH
 //#warning BLYNK_NCP_OTA_PREFETCH hardcoded
 
@@ -65,22 +61,22 @@ bool rpc_client_otaUpdateAvailable_impl(const char* filename, uint32_t filesize,
 {
     const uint32_t maxSize = FIXED_PARTITION_SIZE(slot1_partition);
     if (!maxSize) {
-        BLYNK_LOG("OTA is not supported");
+        LOG_ERR("OTA is not supported");
         return false;
     }
 
     uint32_t percentSize = ((filesize * 100) / maxSize);
-    BLYNK_LOG("OTA update: %s size: %d (%d%%), type: %s, version: %s, build: %s",
+    LOG_INF("OTA update: %s size: %d (%d%%), type: %s, version: %s, build: %s",
               filename, filesize, percentSize, fw_type, fw_ver, fw_build);
 
     if (filesize == 0 || filesize > maxSize) {
-        BLYNK_LOG("File size is invalid");
+        LOG_ERR("File size is invalid");
         return false;
     }
 
     // Prepare for OTA update
     if (0 == flash_area_erase(ota_info.fa, 0, FIXED_PARTITION_SIZE(slot1_partition))) {
-        BLYNK_LOG("Starting OTA");
+        LOG_INF("Starting OTA");
         ota_info.size   = filesize;
         ota_info.offset = 0;
         ota_info.crc32  = 0;
@@ -93,7 +89,7 @@ bool rpc_client_otaUpdateAvailable_impl(const char* filename, uint32_t filesize,
         #endif
         return true;
     } else {
-        BLYNK_LOG("Starting OTA failed");
+        LOG_ERR("Starting OTA failed");
     }
 
     return false;
@@ -104,13 +100,13 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
     bool crcOK = (calcCRC32(chunk.data, chunk.length, 0) == crc32);
 
     #if defined(BLYNK_DEBUG_ALL)
-    BLYNK_LOG("OTA chunk @% 6x, size: %d, crc: %08x => %s",
+    LOG_DBG("OTA chunk @% 6x, size: %d, crc: %08x => %s",
               offset, chunk.length, crc32, crcOK ? "OK" : "fail!");
     #endif
 
     if (!crcOK) { return false; }
     if (ota_info.offset != offset) {
-        BLYNK_LOG("Offset mismatch");
+        LOG_ERR("Offset mismatch");
         return false;
     }
 
@@ -129,14 +125,14 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
         uint8_t *buf = k_malloc(al);
         if(buf){
             if(flash_area_read(ota_info.fa, o, buf, al)) {
-                BLYNK_LOG("can't read data offset[%d] len[%d]", o, al);
+                LOG_ERR("can't read data offset[%d] len[%d]", o, al);
                 k_free(buf);
                 return false;
             }
 
             memcpy(buf + before, data, c);
             if (flash_area_write(ota_info.fa, o, buf, al)) {
-                BLYNK_LOG("can't write data offset[%d] len[%d]", o, al);
+                LOG_ERR("can't write data offset[%d] len[%d]", o, al);
                 k_free(buf);
                 return false;
             }
@@ -147,7 +143,7 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
             ota_info.offset += c;
         }
         else {
-            BLYNK_LOG("can't allocate %d bytes", al);
+            LOG_ERR("can't allocate %d bytes", al);
             return false;
         }
     }
@@ -155,7 +151,7 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
     const size_t body = al * (chunk.length / al);
     if (body) {
         if (flash_area_write(ota_info.fa, ota_info.offset, data, body)) {
-            BLYNK_LOG("can't write data offset[%d] len[%d]", ota_info.offset, body);
+            LOG_ERR("can't write data offset[%d] len[%d]", ota_info.offset, body);
             return false;
         }
         data += body;
@@ -170,7 +166,7 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
             memcpy(buf, data, tail);
             memset(buf + tail, flash_area_erased_val(ota_info.fa), al - tail);
             if (flash_area_write(ota_info.fa, ota_info.offset, buf, al)) {
-                BLYNK_LOG("can't write data offset[%d] len[%d]", ota_info.offset, al);
+                LOG_ERR("can't write data offset[%d] len[%d]", ota_info.offset, al);
                 k_free(buf);
                 return false;
             }
@@ -180,7 +176,7 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
             ota_info.offset += tail;
         }
         else {
-            BLYNK_LOG("can't allocate %d bytes", al);
+            LOG_ERR("can't allocate %d bytes", al);
             return false;
         }
     }
@@ -188,7 +184,7 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
     const int progress = (ota_info.offset*100)/ota_info.size;
     if (progress - ota_info.progress >= 5 || progress == 100) {
         ota_info.progress = progress;
-        BLYNK_LOG("Updating MCU... %d%%", progress);
+        LOG_DBG("Updating MCU... %d%%", progress);
     }
 
     return true;
@@ -197,7 +193,7 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
 bool rpc_client_otaUpdateFinish_impl(void)
 {
     if (ota_info.offset != ota_info.size) {
-        BLYNK_LOG("File size mismatch");
+        LOG_ERR("File size mismatch");
         return false;
     }
 
@@ -211,16 +207,16 @@ bool rpc_client_otaUpdateFinish_impl(void)
 
     uint32_t expectedCRC32 = 0;
     if (!rpc_blynk_otaUpdateGetCRC32(&expectedCRC32)) {
-        BLYNK_LOG("Cannot get CRC32");
+        LOG_ERR("Cannot get CRC32");
         return false;
     }
     if (expectedCRC32 != ota_info.crc32) {
-        BLYNK_LOG("CRC32 check failed (expected: %08x, actual: %08x)",
+        LOG_ERR("CRC32 check failed (expected: %08x, actual: %08x)",
                   expectedCRC32, ota_info.crc32);
         return false;
     }
 
-    BLYNK_LOG("CRC32 verified: %08x", ota_info.crc32);
+    LOG_DBG("CRC32 verified: %08x", ota_info.crc32);
 
     // Apply the update and restart
     flash_area_close(ota_info.fa);
@@ -230,7 +226,7 @@ bool rpc_client_otaUpdateFinish_impl(void)
 }
 
 void rpc_client_otaUpdateCancel_impl(void) {
-    BLYNK_LOG("OTA canceled");
+    LOG_ERR("OTA canceled");
     flash_area_close(ota_info.fa);
 }
 
@@ -248,9 +244,9 @@ void ncp_ota_run(void) {
         case OTA_STATE_PREFETCH: {
             uint8_t prefetch = rpc_blynk_otaUpdatePrefetch();
             if (RPC_OTA_PREFETCH_OK == prefetch) {
-                BLYNK_LOG("OTA prefetch OK");
+                LOG_INF("OTA prefetch OK");
             } else {
-                BLYNK_LOG("OTA prefetch FAILED");
+                LOG_ERR("OTA prefetch FAILED");
             }
             ota_info.state = OTA_STATE_START;
         } break;
@@ -263,9 +259,9 @@ void ncp_ota_run(void) {
         } break;
         case OTA_STATE_APPLY: {
             ota_info.state = OTA_STATE_IDLE;
-            BLYNK_LOG("Applying the update");
+            LOG_INF("Applying the update");
             if(boot_set_pending_multi(0, 0)){
-                BLYNK_LOG("ERROR during Applying the update");
+                LOG_ERR("ERROR during Applying the update");
             }
             else{
                 k_msleep(100);
