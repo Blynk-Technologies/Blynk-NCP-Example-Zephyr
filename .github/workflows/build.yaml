@@ -16,9 +16,12 @@ jobs:
         zephyr_ver: ["v3.5.0", "main"]
         sample:
         - { board: nucleo_l4r5zi,                   path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: nucleo_f746zg,                   path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: nucleo_f767zi,                   path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: adafruit_feather_stm32f405,      path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: blackpill_f411ce,                path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: rpi_pico,                        path: samples/basic,        toolchains: arm-zephyr-eabi }
+        - { board: stm32f072b_disco,                path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: adafruit_feather_m0_basic_proto, path: samples/without_ota,  toolchains: arm-zephyr-eabi }
         - { board: arduino_uno_r4_minima,           path: samples/without_ota,  toolchains: arm-zephyr-eabi }
         exclude:
