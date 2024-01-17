@@ -57,6 +57,13 @@ void rpc_client_blynkVPinChange_impl(uint16_t vpin, rpc_buffer_t param)
     }
 }
 
+
+#include <zephyr/kernel.h>
+#include <zephyr/drivers/gpio.h>
+
+#define LED0_NODE DT_ALIAS(led0)
+static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+
 int main(void)
 {
 #if defined(CONFIG_USB_CDC_ACM)
@@ -70,10 +77,21 @@ int main(void)
     if (!strcmp(CONFIG_BOARD, "arduino_uno_r4_minima"))
     {
         /* enable internal LDO */
-        /* 0x400900cc expected to be USBMC reg */
+        /* 0x00000404 expected to be OFS1 reg */
+        *(uint16_t*)0x00000404 &= ~(1<<12|1<<13|1<<14);
+        *(uint16_t*)0x00000404 |= (4<<12); // HOCO Frequency Setting. 4 is 48MHz
+        /* 0x4001e020 expected to be SCKDIVCR reg */
+        *(uint16_t*)0x4001e020 &= ~(1<<8|1<<9|1<<10); // PCKB
+        /* 0x4001e026 expected to be SCKSCR reg */
+        *(uint16_t*)0x4001e026 = 0; // HOCO clock source
+        /* 0x40090000 expected to be USBFS.SYSCFG reg */
+        *(uint16_t*)0x40090000 |= (1<<10); // SCKE
+        *(uint16_t*)0x40090000 |= (1<<0);  // USBE
+        /* 0x400900cc expected to be USBFS.USBMC reg */
         *(uint16_t*)0x400900cc &= ~(1<<0); // VDDUSBE
         *(uint16_t*)0x400900cc |= (1<<7); // VDCEN
     }
+
     // Initialize Blynk.NCP
     if (0 != blynk_ncp_init())
     {
@@ -85,6 +103,14 @@ int main(void)
     {
         k_msleep(20);
     }
+
+    gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
+    while (1)
+    {
+        gpio_pin_toggle_dt(&led);
+        k_msleep(100);
+    }
+
 
     // Set the configuration mode timeout to 30 minutes (for demo purposes)
     rpc_blynk_setConfigTimeout(30*60);
