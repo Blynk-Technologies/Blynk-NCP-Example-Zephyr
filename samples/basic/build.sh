@@ -5,7 +5,7 @@ export BOARD=$1
 shift
 
 case $BOARD in
-    nucleo_l4r5zi|adafruit_feather_stm32f405)
+    nucleo_l4r5zi|nucleo_f746zg|nucleo_f767zi|adafruit_feather_stm32f405)
         west build -p -b ${BOARD} --sysbuild . -- \
             -Dmcuboot_DTC_OVERLAY_FILE=$(pwd)/boards/${BOARD}.overlay \
             -Dmcuboot_EXTRA_DTC_OVERLAY_FILE=${ZEPHYR_BASE}/../bootloader/mcuboot/boot/zephyr/app.overlay \
@@ -19,6 +19,12 @@ case $BOARD in
         ;;
     rpi_pico)
         west build -p -b ${BOARD} --sysbuild . -- \
+            -Dmcuboot_DTC_OVERLAY_FILE=$(pwd)/boards/${BOARD}.overlay \
+            -Dmcuboot_EXTRA_DTC_OVERLAY_FILE=${ZEPHYR_BASE}/../bootloader/mcuboot/boot/zephyr/app.overlay ${@}
+        ;;
+    stm32f072b_disco)
+        west build -p -b ${BOARD} --sysbuild . -- \
+            -Dmcuboot_EXTRA_CONF_FILE=$(pwd)/sysbuild/mcuboot_${BOARD}.conf \
             -Dmcuboot_DTC_OVERLAY_FILE=$(pwd)/boards/${BOARD}.overlay \
             -Dmcuboot_EXTRA_DTC_OVERLAY_FILE=${ZEPHYR_BASE}/../bootloader/mcuboot/boot/zephyr/app.overlay ${@}
         ;;
