@@ -99,10 +99,8 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, rpc_buffer_t chunk, uint32_
 {
     bool crcOK = (calcCRC32(chunk.data, chunk.length, 0) == crc32);
 
-    #if defined(BLYNK_DEBUG_ALL)
-    LOG_DBG("OTA chunk @% 6x, size: %d, crc: %08x => %s",
+    LOG_DBG("OTA chunk @%06x, size: %u, crc: %08x => %s",
               offset, chunk.length, crc32, crcOK ? "OK" : "fail!");
-    #endif
 
     if (!crcOK) { return false; }
     if (ota_info.offset != offset) {
@@ -246,7 +244,7 @@ void ncp_ota_run(void) {
             if (RPC_OTA_PREFETCH_OK == prefetch) {
                 LOG_INF("OTA prefetch OK");
             } else {
-                LOG_ERR("OTA prefetch FAILED");
+                LOG_WRN("OTA prefetch FAILED");
             }
             ota_info.state = OTA_STATE_START;
         } break;
