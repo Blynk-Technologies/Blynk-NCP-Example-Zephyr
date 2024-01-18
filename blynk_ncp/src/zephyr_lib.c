@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <zephyr/posix/unistd.h>
 #include <zephyr/kernel.h>
 #include <zephyr/linker/linker-defs.h>
 #include <zephyr/device.h>
@@ -16,7 +15,7 @@
 #include <zephyr/drivers/gpio.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_LOG_LVL);
+LOG_MODULE_REGISTER(blynk_ncp, CONFIG_BLYNK_NCP_LOG_LEVEL);
 
 #include <blynk_ncp/blynk_ncp.h>
 #include <BlynkRpcClient.h>
@@ -83,7 +82,7 @@ static bool ncpSetupSerial(uint32_t timeout)
         {
             if (RPC_STATUS_OK != rpc_ncp_ping())
             {
-                LOG_INF("NCP not responding br %d", br[i]);
+                LOG_DBG("NCP not responding br %d", br[i]);
                 i = i+1 >= sizeof(br)/sizeof(br[0]) ? 0 : i+1;
                 timeout -= (20 > timeout ? timeout : 20);
                 k_msleep(20);
@@ -95,7 +94,7 @@ static bool ncpSetupSerial(uint32_t timeout)
                 {
                     return true;
                 }
-                LOG_INF("setting target br %d", CONFIG_BLYNK_NCP_BAUD);
+                LOG_DBG("setting target br %d", CONFIG_BLYNK_NCP_BAUD);
 
                 rpc_hw_setUartBaudRate(CONFIG_BLYNK_NCP_BAUD);
                 k_msleep(20);
@@ -120,6 +119,8 @@ static bool ncpSetupSerial(uint32_t timeout)
     }
     while(timeout);
 
+    LOG_WRN("NCP not responding");
+
     return false;
 }
 
@@ -135,7 +136,7 @@ K_TIMER_DEFINE(ncpPingTimer, ncpPingTimerHandler, NULL);
 
 static void ncpThread(void*, void*, void*)
 {
-    LOG_INF("NCP init");
+    LOG_DBG("NCP init");
 #if DT_HAS_CHOSEN(blynk_ncp_status_led)
     gpio_pin_configure_dt(&staus_led, GPIO_OUTPUT_INACTIVE);
 #endif
@@ -252,11 +253,10 @@ static void ncpPingHandler(struct k_work *work)
         }
         else
         {
-            LOG_INF("NCP ping error. rebooting NCP");
             err_num = 0;
 
 #if DT_HAS_CHOSEN(blynk_ncp_rst)
-            LOG_INF("NCP: perform hard reaset");
+            LOG_WRN("NCP: hard reset");
             gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_ACTIVE);
             k_msleep(100);
             gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
@@ -264,7 +264,7 @@ static void ncpPingHandler(struct k_work *work)
 #endif
 
 #if ! DT_HAS_CHOSEN(blynk_ncp_rst)
-            LOG_INF("NCP: softreboot");
+            LOG_WRN("NCP: soft reboot");
             rpc_ncp_reboot();
             k_msleep(50);
 #endif
@@ -307,7 +307,7 @@ void rpc_client_blynkStateChange_impl(uint8_t state)
         return;
     }
 
-    LOG_INF("NCP state changed [%s] => [%s]", ncpGetStateString(ncp_state), ncpGetStateString(state));
+    LOG_INF("NCP state: %s => %s", ncpGetStateString(ncp_state), ncpGetStateString(state));
     ncp_state = state;
     switch(state)
     {

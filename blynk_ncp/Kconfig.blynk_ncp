@@ -3,11 +3,6 @@
 # Copyright (c) 2024 Blynk Technologies Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-# Config options for Blynk.NCP driver
-
-# Copyright (c) 2024 Blynk Technologies Inc.
-# SPDX-License-Identifier: Apache-2.0
-
 menu "Blynk.NCP host driver"
 
 config BLYNK_NCP_ONBOARD_RGB_LED
@@ -122,11 +117,6 @@ config BLYNK_UART_TX_BUF_SIZE
     help
         Transmitter should be ready to send at least 1536 bytes of raw (unescaped) data
 
-
-config BLYNK_LOG_LVL
-    int "logging level"
-    default LOG_DEFAULT_LEVEL
-
 config BLYNK_THREAD_PRIO
     int "Blynk thread proirty"
     default MAIN_THREAD_PRIORITY
@@ -140,8 +130,11 @@ config BLYNK_NCP_PING_INTERVAL
     default 15
 
 config BLYNK_NCP_ERR_PING_CNT
-    int "Num of unsuccessful NCP pings before NCP reinit"
+    int "Number of unsuccessful NCP pings before NCP reinit"
     default 6
 
+module = BLYNK_NCP
+module-str = Blynk.NCP
+source "subsys/logging/Kconfig.template.log_config"
 
 endmenu

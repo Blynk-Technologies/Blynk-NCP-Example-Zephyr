@@ -9,6 +9,9 @@ case $BOARD in
         west build -p -b ${BOARD} -- \
             -DEXTRA_CONF_FILE=$(pwd)/boards/adafruit_airlift.conf ${@}
         ;;
+    stm32f030_demo)
+        west build -p -b ${BOARD}
+        ;;
     *) # Invalid option
         echo "Error: Invalid option"
         exit 1
