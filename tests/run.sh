@@ -20,7 +20,7 @@ function cleanup {
 
     # cleanup
     cd ${orig_path}
-    if ${rc} == "0"
+    if [ ${rc} == 0 ]
     then
         rm -rf ${TMPDIR}
     else
@@ -35,6 +35,7 @@ trap cleanup EXIT
 
 orig_path=${PWD}
 script_dir=$(readlink -f $0 | xargs dirname)
+utils_dir="$(readlink -f $0 | xargs dirname)/utils"
 export script_name=$(readlink -f $0 | xargs basename)
 
 if [ "$#" -ne 1 ]; then

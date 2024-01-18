@@ -26,9 +26,11 @@ kill $pid
 echo "stop server ${MY_IP}:${OTA_PORT}"
 
 sleep 5
-if [ $(${utils_dir}/get_ver) != ${ver_before} ]
+nv=$(${utils_dir}/get_ver)
+if [ ${nv} == ${v} ]
 then
     exit 0
 else
+    echo "version mismatch ${nv} != ${v}"
     exit 1
 fi
