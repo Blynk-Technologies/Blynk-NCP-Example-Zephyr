@@ -9,32 +9,11 @@
 #include <string.h>
 
 #include <zephyr/kernel.h>
-#include <zephyr/device.h>
 #include <zephyr/logging/log.h>
 
 #include <blynk_ncp/blynk_ncp.h>
 
 LOG_MODULE_REGISTER(blynk_example, CONFIG_LOG_DEFAULT_LEVEL);
-
-static void periodic_timer_work_handler(struct k_work *work)
-{
-    const uint32_t value = k_uptime_get_32();
-    LOG_DBG("Sending %u to Virtual Pin 2", value);
-
-    char buff[16];
-    snprintf(buff, sizeof(buff), "%u", value);
-    rpc_buffer_t val = { (uint8_t*)buff, strlen(buff) };
-    rpc_blynk_virtualWrite(2 /*VPin*/, val);
-}
-
-K_WORK_DEFINE(periodic_timer_work, periodic_timer_work_handler);
-
-static void periodic_timer_handler(struct k_timer*)
-{
-    k_work_submit(&periodic_timer_work);
-}
-
-K_TIMER_DEFINE(periodic_timer, periodic_timer_handler, NULL);
 
 void rpc_client_blynkVPinChange_impl(uint16_t vpin, rpc_buffer_t param)
 {
@@ -55,6 +34,19 @@ void rpc_client_blynkVPinChange_impl(uint16_t vpin, rpc_buffer_t param)
     }
 }
 
+char *format_uint32(char *s, size_t len, uint32_t x)
+{
+    s += len;
+    *--s = 0;
+    if (!x) {
+        *--s = '0';
+    }
+    for (; x; x /= 10) {
+        *--s = '0' + (x % 10);
+    }
+    return s;
+}
+
 int main(void)
 {
 #if defined(CONFIG_USB_CDC_ACM)
@@ -72,18 +64,22 @@ int main(void)
         return 1;
     }
 
-    while(BLYNK_STATE_NOT_INITIALIZED == blynk_ncp_get_state())
+    while (BLYNK_STATE_CONNECTED != blynk_ncp_get_state())
     {
-        k_msleep(20);
+        k_msleep(100);
     }
 
-    // Set the configuration mode timeout to 30 minutes (for demo purposes)
-    rpc_blynk_setConfigTimeout(30*60);
+    while (true) {
+        const uint32_t value = k_uptime_get_32();
+        LOG_DBG("Sending %u to Virtual Pin 2", value);
 
-    // Start a periodic timer
-    k_timer_start(&periodic_timer, K_SECONDS(1), K_SECONDS(1));
+        char buff[16];
+        char* s = format_uint32(buff, sizeof(buff), value);
+        rpc_buffer_t val = { (uint8_t*)s, strlen(s) };
+        rpc_blynk_virtualWrite(2 /*VPin*/, val);
 
-    k_sleep(K_FOREVER);
+        k_msleep(1000);
+    }
 
     return 0;
 }

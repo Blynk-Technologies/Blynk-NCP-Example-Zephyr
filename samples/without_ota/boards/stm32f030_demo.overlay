@@ -1,0 +1,24 @@
+/*
+ * Copyright (c) 2024 Blynk Technologies Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+    chosen {
+        /delete-property/ zephyr,console;
+        /delete-property/ zephyr,shell-uart;
+
+        blynk,ncp-uart = &usart1;
+        blynk,ncp-rst = &ncp_rst;
+    };
+
+    outputs {
+        compatible = "gpio-leds";
+        ncp_rst: ncp_rst {
+            gpios = <&gpiob 1 GPIO_ACTIVE_LOW>; /* PB1 */
+            label = "NCP RST";
+        };
+    };
+};

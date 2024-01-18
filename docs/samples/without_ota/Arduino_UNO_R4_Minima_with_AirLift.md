@@ -1,10 +1,10 @@
 
 # Arduino UNO R4 Minima + AirLift Shield
 
-![main board](../../images/Arduino-UNO-R4-Minima.png)
-
 > [!CAUTION]
 > 🚧 This sample is **Work-In-Progress** and is not fully functional yet. 🚧
+
+![main board](../../images/Arduino-UNO-R4-Minima.png)
 
 > [!NOTE]
 > This board is currently not supported by MCUboot on Zephyr,

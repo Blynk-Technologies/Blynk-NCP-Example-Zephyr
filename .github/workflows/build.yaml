@@ -24,6 +24,7 @@ jobs:
         - { board: stm32f072b_disco,                path: samples/basic,        toolchains: arm-zephyr-eabi }
         - { board: adafruit_feather_m0_basic_proto, path: samples/without_ota,  toolchains: arm-zephyr-eabi }
         - { board: arduino_uno_r4_minima,           path: samples/without_ota,  toolchains: arm-zephyr-eabi }
+        - { board: stm32f030_demo,                  path: samples/without_ota,  toolchains: arm-zephyr-eabi }
         exclude:
           - zephyr_ver: "v3.5.0"
             sample: { board: arduino_uno_r4_minima }
