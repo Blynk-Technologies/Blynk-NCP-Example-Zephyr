@@ -25,7 +25,7 @@ function cleanup {
         rm -rf ${TMPDIR}
     else
         echo ''
-        echo 'ERROR occured. keeping tmp dir for debug'
+        echo 'ERROR occurred. keeping tmp dir for debug'
         echo "TMPDIR=${TMPDIR}"
         echo 'please remove it manually'
     fi

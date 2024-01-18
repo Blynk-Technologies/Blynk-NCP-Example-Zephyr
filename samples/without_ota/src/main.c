@@ -17,20 +17,18 @@ LOG_MODULE_REGISTER(blynk_example, CONFIG_LOG_DEFAULT_LEVEL);
 
 void rpc_client_blynkVPinChange_impl(uint16_t vpin, rpc_buffer_t param)
 {
-    switch (vpin)
-    {
-        case 0:
-            /* VPin0 to VPin1 loopback */
-            rpc_blynk_virtualWrite(1 /*VPin*/, param);
-            break;
-        case 1:
-            /* VPin0 to VPin1 loopback */
-            rpc_blynk_virtualWrite(0 /*VPin*/, param);
-            break;
-        default:
-            LOG_WRN("unknown VPIN [%hu]", vpin);
-            break;
-
+    switch (vpin) {
+    case 0:
+        /* VPin0 to VPin1 loopback */
+        rpc_blynk_virtualWrite(1 /*VPin*/, param);
+        break;
+    case 1:
+        /* VPin0 to VPin1 loopback */
+        rpc_blynk_virtualWrite(0 /*VPin*/, param);
+        break;
+    default:
+        LOG_WRN("unknown VPIN [%hu]", vpin);
+        break;
     }
 }
 
@@ -58,14 +56,12 @@ int main(void)
     LOG_INF("Firmware version: %s", CONFIG_BLYNK_FIRMWARE_VERSION);
 
     // Initialize Blynk.NCP
-    if (0 != blynk_ncp_init())
-    {
+    if (0 != blynk_ncp_init()) {
         LOG_ERR("Can't initialize Blynk.NCP");
         return 1;
     }
 
-    while (BLYNK_STATE_CONNECTED != blynk_ncp_get_state())
-    {
+    while (BLYNK_STATE_CONNECTED != blynk_ncp_get_state()) {
         k_msleep(100);
     }
 
@@ -74,8 +70,8 @@ int main(void)
         LOG_DBG("Sending %u to Virtual Pin 2", value);
 
         char buff[16];
-        char* s = format_uint32(buff, sizeof(buff), value);
-        rpc_buffer_t val = { (uint8_t*)s, strlen(s) };
+        char *s = format_uint32(buff, sizeof(buff), value);
+        rpc_buffer_t val = {(uint8_t *)s, strlen(s)};
         rpc_blynk_virtualWrite(2 /*VPin*/, val);
 
         k_msleep(1000);
@@ -83,4 +79,3 @@ int main(void)
 
     return 0;
 }
-
