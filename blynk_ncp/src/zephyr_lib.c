@@ -129,15 +129,29 @@ static void ncpThread(void *, void *, void *)
 #if DT_HAS_CHOSEN(blynk_ncp_status_led)
     gpio_pin_configure_dt(&staus_led, GPIO_OUTPUT_INACTIVE);
 #endif
+
 #if DT_HAS_CHOSEN(blynk_ncp_rst)
+    LOG_WRN("NCP: hard reset");
+    gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_ACTIVE);
+    k_msleep(100);
     gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
-    k_msleep(10);
+    k_msleep(100);
 #endif
 
     if (!ncpSetupSerial(5000)) {
         LOG_ERR("can't setup serial");
         return;
     }
+
+#if !DT_HAS_CHOSEN(blynk_ncp_rst)
+    LOG_WRN("NCP: soft reboot");
+    rpc_ncp_reboot();
+
+    if (!ncpSetupSerial(5000)) {
+        LOG_ERR("can't setup serial");
+        return;
+    }
+#endif
 
     const char *ncpFwVer = "unknown";
     if (!rpc_blynk_getNcpVersion(&ncpFwVer)) {
@@ -229,20 +243,6 @@ static void ncpPingHandler(struct k_work *work)
             LOG_INF("NCP ping error. attempt [%d]", err_num);
         } else {
             err_num = 0;
-
-#if DT_HAS_CHOSEN(blynk_ncp_rst)
-            LOG_WRN("NCP: hard reset");
-            gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_ACTIVE);
-            k_msleep(100);
-            gpio_pin_configure_dt(&ncp_rst, GPIO_OUTPUT_INACTIVE);
-            k_msleep(100);
-#endif
-
-#if !DT_HAS_CHOSEN(blynk_ncp_rst)
-            LOG_WRN("NCP: soft reboot");
-            rpc_ncp_reboot();
-            k_msleep(50);
-#endif
             k_timer_start(&ncpReinitTimer, K_SECONDS(1), K_NO_WAIT);
         }
     } else {
