@@ -21,14 +21,12 @@ extern "C" {
 typedef void (*blynk_ncp_state_update_callback_t)(RpcBlynkState);
 void blynk_ncp_register_state_update_callback(blynk_ncp_state_update_callback_t cb);
 
-
 typedef void (*blynk_ncp_event_callback_t)(RpcEvent);
 void blynk_ncp_register_event_callback(blynk_ncp_event_callback_t cb);
 
 RpcBlynkState blynk_ncp_get_state(void);
 
 int blynk_ncp_init(void);
-
 
 #if defined(CONFIG_MCUBOOT_BOOTUTIL_LIB)
 /* TODO: resolve external library helper functions */
@@ -41,4 +39,3 @@ extern int boot_set_pending_multi(int image_index, int permanent);
 #endif
 
 #endif /* ZEPHYR_BLYNK_NCP_H */
-
