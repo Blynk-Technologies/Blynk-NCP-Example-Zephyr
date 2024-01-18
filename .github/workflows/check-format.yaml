@@ -1,0 +1,35 @@
+name: Check spelling and formatting
+
+on: [push, pull_request]
+
+jobs:
+  spellcheck:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Install codespell
+      run: |
+        pip install codespell
+    - name: Spellcheck
+      run: |
+        codespell --config tests/codespell.cfg
+
+  clang-format:
+    name: Check code formatting
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run clang-format style check
+      uses: jidicula/clang-format-action@v4.11.0
+      with:
+        clang-format-version: '17'
+
