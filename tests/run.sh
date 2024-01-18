@@ -106,6 +106,8 @@ fi
 echo "fw ver: ${SRC_VERSION}" | tee -api ${TMPDIR}/build.log
 echo "" | tee -api ${TMPDIR}/build.log
 
+${utils_dir}/set_src_creds
+
 tests=($(${PLATFORM_DIR}/supported_tests))
 
 for test in ${tests[@]}
