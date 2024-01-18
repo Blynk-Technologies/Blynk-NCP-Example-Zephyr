@@ -16,9 +16,16 @@ echo "flash board"
 ${PLATFORM_DIR}/flash_board
 echo "flash done"
 
-if ${utils_dir}/wait_online 50 5 && ${utils_dir}/wait_mcu_ping 10 5 && $(${utils_dir}/get_ver) == ${v}
+if ${utils_dir}/wait_online 50 5 && ${utils_dir}/wait_mcu_ping 10 5
 then
-    exit 0
+    nv=$(${utils_dir}/get_ver)
+    if [ ${nv} == ${v} ]
+    then
+        exit 0
+    else
+        echo "version mismatch ${nv} != ${v}"
+        exit 1
+    fi
 else
     exit 1
 fi

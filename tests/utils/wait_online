@@ -3,7 +3,7 @@
 for i in $(seq 1 ${1})
 do
     online=$(curl -s https://blynk.cloud/external/api/isHardwareConnected?token=${BLYNK_AUTH_TOKEN})
-    if [ "true" = ${online} ]
+    if [ "true" == ${online} ]
     then
         exit 0
     else
