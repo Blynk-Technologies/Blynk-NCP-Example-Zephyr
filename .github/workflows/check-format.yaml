@@ -1,4 +1,4 @@
-name: Check spelling and formatting
+name: checks
 
 on: [push, pull_request]
 
@@ -22,7 +22,7 @@ jobs:
         codespell --config tests/codespell.cfg
 
   clang-format:
-    name: Check code formatting
+    name: Code formatting
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
