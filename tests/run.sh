@@ -9,7 +9,7 @@ rc=1
 
 function cleanup {
     #collect build artifacts
-    mkdir -p ${PRJDIR}/${SAMPLE_PATH}/build/
+    mkdir -p ${PRJDIR}/${SAMPLE_PATH}/build/ &>> /dev/null
     mv ${TMPDIR}/build.log ${PRJDIR}/${SAMPLE_PATH}/build/ &>> /dev/null
     tarname=build_${TEST_PLATFORM}_${SRC_VERSION}_[$(date -u +%s)].tar.gz
     mkdir -p ${ARTIFACTS_PATH} &>> /dev/null
@@ -105,6 +105,8 @@ else
 fi
 echo "fw ver: ${SRC_VERSION}" | tee -api ${TMPDIR}/build.log
 echo "" | tee -api ${TMPDIR}/build.log
+
+${utils_dir}/set_src_creds
 
 tests=($(${PLATFORM_DIR}/supported_tests))
 
