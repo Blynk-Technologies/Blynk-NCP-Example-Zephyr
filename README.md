@@ -1,5 +1,5 @@
 
-# Blynk.NCP
+# Blynk.NCP integration for Zephyr OS
 
 [![Issues](https://img.shields.io/github/issues/Blynk-Technologies/Blynk-NCP-Driver.svg)](https://github.com/Blynk-Technologies/Blynk-NCP-Driver/issues)
 [![Downloads](https://img.shields.io/github/downloads/Blynk-Technologies/BlynkNcpDriver/total)](https://github.com/Blynk-Technologies/BlynkNcpDriver/releases/latest)
