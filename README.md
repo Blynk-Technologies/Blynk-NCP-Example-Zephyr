@@ -1,10 +1,10 @@
 
 # Blynk.NCP
 
-[![Issues](https://img.shields.io/github/issues/Blynk-Technologies/BlynkNcpExample_Zephyr.svg)](https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr/issues)
+[![Issues](https://img.shields.io/github/issues/Blynk-Technologies/Blynk-NCP-Driver.svg)](https://github.com/Blynk-Technologies/Blynk-NCP-Driver/issues)
 [![Downloads](https://img.shields.io/github/downloads/Blynk-Technologies/BlynkNcpDriver/total)](https://github.com/Blynk-Technologies/BlynkNcpDriver/releases/latest)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/Blynk-Technologies/BlynkNcpExample_Zephyr/build.yaml?branch=main&logo=github&label=tests)](https://github.com/Blynk-Technologies/BlynkNcpExample_Zephyr/actions)
-[![License](https://img.shields.io/github/license/Blynk-Technologies/BlynkNcpExample_Zephyr?color=blue)](LICENSE)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/Blynk-Technologies/Blynk-NCP-Example-Zephyr/build.yaml?branch=main&logo=github&label=tests)](https://github.com/Blynk-Technologies/Blynk-NCP-Example-Zephyr/actions)
+[![License](https://img.shields.io/github/license/Blynk-Technologies/Blynk-NCP-Example-Zephyr?color=blue)](LICENSE)
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
 **Blynk.NCP** is a solution that off-loads connectivity to a **Network Co-Processor (NCP)** while your application logic resides on the **Primary MCU**. This implies a [dual-Microcontroller Unit (MCU)](https://docs.google.com/presentation/d/1aP2sQWB0J9EWj8Y1h5qeyfm2aFwaNSUKnCE-k7zxVnk/present) architecture.
@@ -75,6 +75,10 @@ We have prepared a set of step-by-step tutorials for each use case:
 ## Troubleshooting
 
 Check out the [troubleshooting guide](docs/Troubleshooting.md)
+
+## Report an issue
+
+Issues are maintained in the [Blynk NCP Driver](https://github.com/Blynk-Technologies/Blynk-NCP-Driver/issues) repository.
 
 ## Disclaimer
 
