@@ -369,7 +369,7 @@ int blynk_ncp_init(void)
     /* clang-format off */
     volatile const char firmwareTag[] = "blnkinf\0"
     BLYNK_PARAM_KV("mcu"    , CONFIG_BLYNK_FIRMWARE_VERSION)       // Primary MCU: firmware version
-    BLYNK_PARAM_KV("fw-type", CONFIG_BLYNK_TEMPLATE_ID)            // Firmware type (usually same as Template ID)
+    BLYNK_PARAM_KV("fw-type", CONFIG_BLYNK_FIRMWARE_TYPE)          // Firmware type (usually same as Template ID)
     BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)               // Firmware build date and time
     BLYNK_PARAM_KV("blynk"  , BLYNK_RPC_LIB_VERSION)               // Version of the NCP driver library
     "\0";
