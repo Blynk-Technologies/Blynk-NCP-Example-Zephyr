@@ -13,9 +13,13 @@ manifest:
       import:
         name-allowlist:
           - cmsis
+          - cmsis-dsp
+          - cmsis-nn
+          - cmsis_6
           - hal_stm32
           - hal_rpi_pico
           - hal_atmel
+          - hal_renesas
           - mcuboot
           - mbedtls
 
