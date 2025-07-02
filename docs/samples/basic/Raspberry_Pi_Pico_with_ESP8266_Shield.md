@@ -78,7 +78,7 @@ Wrote 56320 bytes to zephyr.uf2
 
 > [!NOTE]
 > You will need an external programmer like `Segger JLink` or `PicoProbe`.
-> We were unable to flash the board properly using miltiple `UF2` files (one for MCUboot and one for the main firmware).
+> We were unable to flash the board properly using multiple `UF2` files (one for MCUboot and one for the main firmware).
 > Read more about [flashing the Pi Pico with Zephyr](https://docs.zephyrproject.org/latest/boards/arm/rpi_pico/doc/index.html#flashing)
 
 ```sh
@@ -95,7 +95,7 @@ west flash --runner jlink
 > [!WARNING]
 > When assembling the board, ensure that all USB ports are disconnected from any components, and that there is no power supply connected.
 
-1. Connect Pico-ESP8266 shield to the Raspberry Pi Pico.  
+1. Connect Pico-ESP8266 shield to the Raspberry Pi Pico.
    **Important**: The silkscreened USB port representation on the shield should be properly aligned with the actual USB port on the Raspberry Pi Pico.
 2. Connect your device using USB. The device will appear as a `CDC-ACM` serial.
 3. Use your favourite serial terminal software (`PuTTY`, `minicom`, `screen`) to access the serial console (`115200 8N1`).

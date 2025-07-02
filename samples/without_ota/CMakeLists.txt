@@ -52,6 +52,7 @@ ExternalProject_Add(
   INSTALL_COMMAND ""      # This particular build system has no install command
   BUILD_BYPRODUCTS ${BLYNK_NCP_DIR}/libblynkncp.a
   DEPENDS zephyr_interface
+  DEPENDS offsets_h
   )
 
 # Create a wrapper CMake library that our app can link with
@@ -69,3 +70,4 @@ set_target_properties(blynk_ncp_lib PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${
 
 target_link_libraries(app PUBLIC blynk_ncp_lib)
 target_link_libraries(blynk_ncp_lib INTERFACE kernel)
+
